@@ -1,0 +1,845 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-13T15:06:14+00:00",
+  "title": "Design System: SSD Workspace",
+  "extensions": {
+    "colorMeta": {
+      "accent": {
+        "role": "primary",
+        "displayName": "System Accent",
+        "canonical": "AccentColor",
+        "tonalRamp": [
+          "oklch(15% 0.083 255)",
+          "oklch(25% 0.117 255)",
+          "oklch(35% 0.150 255)",
+          "oklch(45% 0.183 255)",
+          "oklch(60% 0.167 255)",
+          "oklch(72% 0.127 255)",
+          "oklch(84% 0.087 255)",
+          "oklch(95% 0.050 255)"
+        ]
+      },
+      "on-accent": {
+        "role": "primary",
+        "displayName": "Text on Accent",
+        "canonical": "AccentColorText",
+        "tonalRamp": [
+          "oklch(15% 0.010 255)",
+          "oklch(25% 0.012 255)",
+          "oklch(35% 0.015 255)",
+          "oklch(45% 0.018 255)",
+          "oklch(60% 0.017 255)",
+          "oklch(72% 0.013 255)",
+          "oklch(84% 0.010 255)",
+          "oklch(95% 0.010 255)"
+        ]
+      },
+      "link": {
+        "role": "secondary",
+        "displayName": "Native Link Blue",
+        "canonical": "#0068da",
+        "tonalRamp": [
+          "oklch(15% 0.075 255)",
+          "oklch(25% 0.105 255)",
+          "oklch(35% 0.135 255)",
+          "oklch(45% 0.165 255)",
+          "oklch(60% 0.150 255)",
+          "oklch(72% 0.114 255)",
+          "oklch(84% 0.078 255)",
+          "oklch(95% 0.045 255)"
+        ]
+      },
+      "link-dark": {
+        "role": "secondary",
+        "displayName": "Native Link Blue (dark)",
+        "canonical": "#419cff",
+        "tonalRamp": [
+          "oklch(15% 0.075 255)",
+          "oklch(25% 0.105 255)",
+          "oklch(35% 0.135 255)",
+          "oklch(45% 0.165 255)",
+          "oklch(60% 0.150 255)",
+          "oklch(72% 0.114 255)",
+          "oklch(84% 0.078 255)",
+          "oklch(95% 0.045 255)"
+        ]
+      },
+      "ok": {
+        "role": "tertiary",
+        "displayName": "Ready Green",
+        "canonical": "#1a7f37",
+        "tonalRamp": [
+          "oklch(15% 0.071 145)",
+          "oklch(25% 0.099 145)",
+          "oklch(35% 0.128 145)",
+          "oklch(45% 0.156 145)",
+          "oklch(60% 0.142 145)",
+          "oklch(72% 0.108 145)",
+          "oklch(84% 0.074 145)",
+          "oklch(95% 0.043 145)"
+        ]
+      },
+      "ok-dark": {
+        "role": "tertiary",
+        "displayName": "Ready Green (dark)",
+        "canonical": "#32d74b",
+        "tonalRamp": [
+          "oklch(15% 0.083 145)",
+          "oklch(25% 0.117 145)",
+          "oklch(35% 0.150 145)",
+          "oklch(45% 0.183 145)",
+          "oklch(60% 0.167 145)",
+          "oklch(72% 0.127 145)",
+          "oklch(84% 0.087 145)",
+          "oklch(95% 0.050 145)"
+        ]
+      },
+      "warn": {
+        "role": "tertiary",
+        "displayName": "Attention Orange",
+        "canonical": "#a35200",
+        "tonalRamp": [
+          "oklch(15% 0.062 55)",
+          "oklch(25% 0.087 55)",
+          "oklch(35% 0.112 55)",
+          "oklch(45% 0.137 55)",
+          "oklch(60% 0.125 55)",
+          "oklch(72% 0.095 55)",
+          "oklch(84% 0.065 55)",
+          "oklch(95% 0.037 55)"
+        ]
+      },
+      "warn-dark": {
+        "role": "tertiary",
+        "displayName": "Attention Orange (dark)",
+        "canonical": "#ffb340",
+        "tonalRamp": [
+          "oklch(15% 0.067 70)",
+          "oklch(25% 0.093 70)",
+          "oklch(35% 0.120 70)",
+          "oklch(45% 0.147 70)",
+          "oklch(60% 0.133 70)",
+          "oklch(72% 0.101 70)",
+          "oklch(84% 0.069 70)",
+          "oklch(95% 0.040 70)"
+        ]
+      },
+      "danger": {
+        "role": "tertiary",
+        "displayName": "Error Red",
+        "canonical": "#d70015",
+        "tonalRamp": [
+          "oklch(15% 0.092 25)",
+          "oklch(25% 0.128 25)",
+          "oklch(35% 0.165 25)",
+          "oklch(45% 0.202 25)",
+          "oklch(60% 0.183 25)",
+          "oklch(72% 0.139 25)",
+          "oklch(84% 0.095 25)",
+          "oklch(95% 0.055 25)"
+        ]
+      },
+      "danger-dark": {
+        "role": "tertiary",
+        "displayName": "Error Red (dark)",
+        "canonical": "#ff6961",
+        "tonalRamp": [
+          "oklch(15% 0.075 25)",
+          "oklch(25% 0.105 25)",
+          "oklch(35% 0.135 25)",
+          "oklch(45% 0.165 25)",
+          "oklch(60% 0.150 25)",
+          "oklch(72% 0.114 25)",
+          "oklch(84% 0.078 25)",
+          "oklch(95% 0.045 25)"
+        ]
+      },
+      "label": {
+        "role": "neutral",
+        "displayName": "Label",
+        "canonical": "rgba(0, 0, 0, 0.86)",
+        "tonalRamp": [
+          "rgba(0, 0, 0, 0.03)",
+          "rgba(0, 0, 0, 0.05)",
+          "rgba(0, 0, 0, 0.07)",
+          "rgba(0, 0, 0, 0.09)",
+          "rgba(0, 0, 0, 0.12)",
+          "rgba(0, 0, 0, 0.2)",
+          "rgba(0, 0, 0, 0.32)",
+          "rgba(0, 0, 0, 0.58)"
+        ]
+      },
+      "label-dark": {
+        "role": "neutral",
+        "displayName": "Label (dark)",
+        "canonical": "rgba(255, 255, 255, 0.9)",
+        "tonalRamp": [
+          "rgba(255, 255, 255, 0.03)",
+          "rgba(255, 255, 255, 0.05)",
+          "rgba(255, 255, 255, 0.07)",
+          "rgba(255, 255, 255, 0.09)",
+          "rgba(255, 255, 255, 0.12)",
+          "rgba(255, 255, 255, 0.2)",
+          "rgba(255, 255, 255, 0.32)",
+          "rgba(255, 255, 255, 0.58)"
+        ]
+      },
+      "secondary": {
+        "role": "neutral",
+        "displayName": "Secondary Label",
+        "canonical": "rgba(0, 0, 0, 0.58)",
+        "tonalRamp": [
+          "rgba(0, 0, 0, 0.03)",
+          "rgba(0, 0, 0, 0.05)",
+          "rgba(0, 0, 0, 0.07)",
+          "rgba(0, 0, 0, 0.09)",
+          "rgba(0, 0, 0, 0.12)",
+          "rgba(0, 0, 0, 0.2)",
+          "rgba(0, 0, 0, 0.32)",
+          "rgba(0, 0, 0, 0.58)"
+        ]
+      },
+      "secondary-dark": {
+        "role": "neutral",
+        "displayName": "Secondary Label (dark)",
+        "canonical": "rgba(255, 255, 255, 0.62)",
+        "tonalRamp": [
+          "rgba(255, 255, 255, 0.03)",
+          "rgba(255, 255, 255, 0.05)",
+          "rgba(255, 255, 255, 0.07)",
+          "rgba(255, 255, 255, 0.09)",
+          "rgba(255, 255, 255, 0.12)",
+          "rgba(255, 255, 255, 0.2)",
+          "rgba(255, 255, 255, 0.32)",
+          "rgba(255, 255, 255, 0.58)"
+        ]
+      },
+      "tertiary": {
+        "role": "neutral",
+        "displayName": "Tertiary Label",
+        "canonical": "rgba(0, 0, 0, 0.32)",
+        "tonalRamp": [
+          "rgba(0, 0, 0, 0.03)",
+          "rgba(0, 0, 0, 0.05)",
+          "rgba(0, 0, 0, 0.07)",
+          "rgba(0, 0, 0, 0.09)",
+          "rgba(0, 0, 0, 0.12)",
+          "rgba(0, 0, 0, 0.2)",
+          "rgba(0, 0, 0, 0.32)",
+          "rgba(0, 0, 0, 0.58)"
+        ]
+      },
+      "tertiary-dark": {
+        "role": "neutral",
+        "displayName": "Tertiary Label (dark)",
+        "canonical": "rgba(255, 255, 255, 0.3)",
+        "tonalRamp": [
+          "rgba(255, 255, 255, 0.03)",
+          "rgba(255, 255, 255, 0.05)",
+          "rgba(255, 255, 255, 0.07)",
+          "rgba(255, 255, 255, 0.09)",
+          "rgba(255, 255, 255, 0.12)",
+          "rgba(255, 255, 255, 0.2)",
+          "rgba(255, 255, 255, 0.32)",
+          "rgba(255, 255, 255, 0.58)"
+        ]
+      },
+      "platter": {
+        "role": "neutral",
+        "displayName": "Platter",
+        "canonical": "rgba(255, 255, 255, 0.22)",
+        "tonalRamp": [
+          "rgba(255, 255, 255, 0.03)",
+          "rgba(255, 255, 255, 0.05)",
+          "rgba(255, 255, 255, 0.07)",
+          "rgba(255, 255, 255, 0.09)",
+          "rgba(255, 255, 255, 0.12)",
+          "rgba(255, 255, 255, 0.2)",
+          "rgba(255, 255, 255, 0.32)",
+          "rgba(255, 255, 255, 0.58)"
+        ]
+      },
+      "platter-dark": {
+        "role": "neutral",
+        "displayName": "Platter (dark)",
+        "canonical": "rgba(255, 255, 255, 0.07)",
+        "tonalRamp": [
+          "rgba(255, 255, 255, 0.03)",
+          "rgba(255, 255, 255, 0.05)",
+          "rgba(255, 255, 255, 0.07)",
+          "rgba(255, 255, 255, 0.09)",
+          "rgba(255, 255, 255, 0.12)",
+          "rgba(255, 255, 255, 0.2)",
+          "rgba(255, 255, 255, 0.32)",
+          "rgba(255, 255, 255, 0.58)"
+        ]
+      },
+      "platter-edge": {
+        "role": "neutral",
+        "displayName": "Platter Edge",
+        "canonical": "rgba(0, 0, 0, 0.06)",
+        "tonalRamp": [
+          "rgba(0, 0, 0, 0.03)",
+          "rgba(0, 0, 0, 0.05)",
+          "rgba(0, 0, 0, 0.07)",
+          "rgba(0, 0, 0, 0.09)",
+          "rgba(0, 0, 0, 0.12)",
+          "rgba(0, 0, 0, 0.2)",
+          "rgba(0, 0, 0, 0.32)",
+          "rgba(0, 0, 0, 0.58)"
+        ]
+      },
+      "platter-edge-dark": {
+        "role": "neutral",
+        "displayName": "Platter Edge (dark)",
+        "canonical": "rgba(255, 255, 255, 0.09)",
+        "tonalRamp": [
+          "rgba(255, 255, 255, 0.03)",
+          "rgba(255, 255, 255, 0.05)",
+          "rgba(255, 255, 255, 0.07)",
+          "rgba(255, 255, 255, 0.09)",
+          "rgba(255, 255, 255, 0.12)",
+          "rgba(255, 255, 255, 0.2)",
+          "rgba(255, 255, 255, 0.32)",
+          "rgba(255, 255, 255, 0.58)"
+        ]
+      },
+      "control": {
+        "role": "neutral",
+        "displayName": "Control",
+        "canonical": "rgba(0, 0, 0, 0.05)",
+        "tonalRamp": [
+          "rgba(0, 0, 0, 0.03)",
+          "rgba(0, 0, 0, 0.05)",
+          "rgba(0, 0, 0, 0.07)",
+          "rgba(0, 0, 0, 0.09)",
+          "rgba(0, 0, 0, 0.12)",
+          "rgba(0, 0, 0, 0.2)",
+          "rgba(0, 0, 0, 0.32)",
+          "rgba(0, 0, 0, 0.58)"
+        ]
+      },
+      "control-dark": {
+        "role": "neutral",
+        "displayName": "Control (dark)",
+        "canonical": "rgba(255, 255, 255, 0.12)",
+        "tonalRamp": [
+          "rgba(255, 255, 255, 0.03)",
+          "rgba(255, 255, 255, 0.05)",
+          "rgba(255, 255, 255, 0.07)",
+          "rgba(255, 255, 255, 0.09)",
+          "rgba(255, 255, 255, 0.12)",
+          "rgba(255, 255, 255, 0.2)",
+          "rgba(255, 255, 255, 0.32)",
+          "rgba(255, 255, 255, 0.58)"
+        ]
+      },
+      "control-hover": {
+        "role": "neutral",
+        "displayName": "Control Hover",
+        "canonical": "rgba(0, 0, 0, 0.09)",
+        "tonalRamp": [
+          "rgba(0, 0, 0, 0.03)",
+          "rgba(0, 0, 0, 0.05)",
+          "rgba(0, 0, 0, 0.07)",
+          "rgba(0, 0, 0, 0.09)",
+          "rgba(0, 0, 0, 0.12)",
+          "rgba(0, 0, 0, 0.2)",
+          "rgba(0, 0, 0, 0.32)",
+          "rgba(0, 0, 0, 0.58)"
+        ]
+      },
+      "control-hover-dark": {
+        "role": "neutral",
+        "displayName": "Control Hover (dark)",
+        "canonical": "rgba(255, 255, 255, 0.2)",
+        "tonalRamp": [
+          "rgba(255, 255, 255, 0.03)",
+          "rgba(255, 255, 255, 0.05)",
+          "rgba(255, 255, 255, 0.07)",
+          "rgba(255, 255, 255, 0.09)",
+          "rgba(255, 255, 255, 0.12)",
+          "rgba(255, 255, 255, 0.2)",
+          "rgba(255, 255, 255, 0.32)",
+          "rgba(255, 255, 255, 0.58)"
+        ]
+      },
+      "control-edge": {
+        "role": "neutral",
+        "displayName": "Control Edge",
+        "canonical": "rgba(0, 0, 0, 0.06)",
+        "tonalRamp": [
+          "rgba(0, 0, 0, 0.03)",
+          "rgba(0, 0, 0, 0.05)",
+          "rgba(0, 0, 0, 0.07)",
+          "rgba(0, 0, 0, 0.09)",
+          "rgba(0, 0, 0, 0.12)",
+          "rgba(0, 0, 0, 0.2)",
+          "rgba(0, 0, 0, 0.32)",
+          "rgba(0, 0, 0, 0.58)"
+        ]
+      },
+      "control-edge-dark": {
+        "role": "neutral",
+        "displayName": "Control Edge (dark)",
+        "canonical": "rgba(255, 255, 255, 0.1)",
+        "tonalRamp": [
+          "rgba(255, 255, 255, 0.03)",
+          "rgba(255, 255, 255, 0.05)",
+          "rgba(255, 255, 255, 0.07)",
+          "rgba(255, 255, 255, 0.09)",
+          "rgba(255, 255, 255, 0.12)",
+          "rgba(255, 255, 255, 0.2)",
+          "rgba(255, 255, 255, 0.32)",
+          "rgba(255, 255, 255, 0.58)"
+        ]
+      },
+      "track": {
+        "role": "neutral",
+        "displayName": "Track",
+        "canonical": "rgba(0, 0, 0, 0.09)",
+        "tonalRamp": [
+          "rgba(0, 0, 0, 0.03)",
+          "rgba(0, 0, 0, 0.05)",
+          "rgba(0, 0, 0, 0.07)",
+          "rgba(0, 0, 0, 0.09)",
+          "rgba(0, 0, 0, 0.12)",
+          "rgba(0, 0, 0, 0.2)",
+          "rgba(0, 0, 0, 0.32)",
+          "rgba(0, 0, 0, 0.58)"
+        ]
+      },
+      "track-dark": {
+        "role": "neutral",
+        "displayName": "Track (dark)",
+        "canonical": "rgba(255, 255, 255, 0.12)",
+        "tonalRamp": [
+          "rgba(255, 255, 255, 0.03)",
+          "rgba(255, 255, 255, 0.05)",
+          "rgba(255, 255, 255, 0.07)",
+          "rgba(255, 255, 255, 0.09)",
+          "rgba(255, 255, 255, 0.12)",
+          "rgba(255, 255, 255, 0.2)",
+          "rgba(255, 255, 255, 0.32)",
+          "rgba(255, 255, 255, 0.58)"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "rgba(0, 0, 0, 0.07)",
+        "tonalRamp": [
+          "rgba(0, 0, 0, 0.03)",
+          "rgba(0, 0, 0, 0.05)",
+          "rgba(0, 0, 0, 0.07)",
+          "rgba(0, 0, 0, 0.09)",
+          "rgba(0, 0, 0, 0.12)",
+          "rgba(0, 0, 0, 0.2)",
+          "rgba(0, 0, 0, 0.32)",
+          "rgba(0, 0, 0, 0.58)"
+        ]
+      },
+      "hairline-dark": {
+        "role": "neutral",
+        "displayName": "Hairline (dark)",
+        "canonical": "rgba(255, 255, 255, 0.08)",
+        "tonalRamp": [
+          "rgba(255, 255, 255, 0.03)",
+          "rgba(255, 255, 255, 0.05)",
+          "rgba(255, 255, 255, 0.07)",
+          "rgba(255, 255, 255, 0.09)",
+          "rgba(255, 255, 255, 0.12)",
+          "rgba(255, 255, 255, 0.2)",
+          "rgba(255, 255, 255, 0.32)",
+          "rgba(255, 255, 255, 0.58)"
+        ]
+      },
+      "badge": {
+        "role": "neutral",
+        "displayName": "Badge",
+        "canonical": "rgba(0, 0, 0, 0.06)",
+        "tonalRamp": [
+          "rgba(0, 0, 0, 0.03)",
+          "rgba(0, 0, 0, 0.05)",
+          "rgba(0, 0, 0, 0.07)",
+          "rgba(0, 0, 0, 0.09)",
+          "rgba(0, 0, 0, 0.12)",
+          "rgba(0, 0, 0, 0.2)",
+          "rgba(0, 0, 0, 0.32)",
+          "rgba(0, 0, 0, 0.58)"
+        ]
+      },
+      "badge-dark": {
+        "role": "neutral",
+        "displayName": "Badge (dark)",
+        "canonical": "rgba(255, 255, 255, 0.1)",
+        "tonalRamp": [
+          "rgba(255, 255, 255, 0.03)",
+          "rgba(255, 255, 255, 0.05)",
+          "rgba(255, 255, 255, 0.07)",
+          "rgba(255, 255, 255, 0.09)",
+          "rgba(255, 255, 255, 0.12)",
+          "rgba(255, 255, 255, 0.2)",
+          "rgba(255, 255, 255, 0.32)",
+          "rgba(255, 255, 255, 0.58)"
+        ]
+      },
+      "on-ok": {
+        "role": "tertiary",
+        "displayName": "Check on Green",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0.005 145)",
+          "oklch(25% 0.007 145)",
+          "oklch(35% 0.009 145)",
+          "oklch(45% 0.011 145)",
+          "oklch(60% 0.010 145)",
+          "oklch(72% 0.008 145)",
+          "oklch(84% 0.005 145)",
+          "oklch(95% 0.003 145)"
+        ]
+      },
+      "seg-backup": {
+        "role": "tertiary",
+        "displayName": "Backup Purple",
+        "canonical": "#a550d3",
+        "tonalRamp": [
+          "oklch(15% 0.085 313)",
+          "oklch(25% 0.119 313)",
+          "oklch(35% 0.153 313)",
+          "oklch(45% 0.187 313)",
+          "oklch(60% 0.170 313)",
+          "oklch(72% 0.129 313)",
+          "oklch(84% 0.088 313)",
+          "oklch(95% 0.051 313)"
+        ]
+      },
+      "seg-backup-dark": {
+        "role": "tertiary",
+        "displayName": "Backup Purple (dark)",
+        "canonical": "#c37ef0",
+        "tonalRamp": [
+          "oklch(15% 0.075 310)",
+          "oklch(25% 0.105 310)",
+          "oklch(35% 0.135 310)",
+          "oklch(45% 0.165 310)",
+          "oklch(60% 0.150 310)",
+          "oklch(72% 0.114 310)",
+          "oklch(84% 0.078 310)",
+          "oklch(95% 0.045 310)"
+        ]
+      },
+      "seg-other": {
+        "role": "neutral",
+        "displayName": "Other Volumes",
+        "canonical": "rgba(0, 0, 0, 0.22)",
+        "tonalRamp": [
+          "rgba(0, 0, 0, 0.03)",
+          "rgba(0, 0, 0, 0.05)",
+          "rgba(0, 0, 0, 0.07)",
+          "rgba(0, 0, 0, 0.09)",
+          "rgba(0, 0, 0, 0.12)",
+          "rgba(0, 0, 0, 0.2)",
+          "rgba(0, 0, 0, 0.32)",
+          "rgba(0, 0, 0, 0.58)"
+        ]
+      },
+      "seg-other-dark": {
+        "role": "neutral",
+        "displayName": "Other Volumes (dark)",
+        "canonical": "rgba(255, 255, 255, 0.28)",
+        "tonalRamp": [
+          "rgba(255, 255, 255, 0.03)",
+          "rgba(255, 255, 255, 0.05)",
+          "rgba(255, 255, 255, 0.07)",
+          "rgba(255, 255, 255, 0.09)",
+          "rgba(255, 255, 255, 0.12)",
+          "rgba(255, 255, 255, 0.2)",
+          "rgba(255, 255, 255, 0.32)",
+          "rgba(255, 255, 255, 0.58)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "The verdict title only (600, 17px, -0.01em); one per window."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "The Storage platter label (600, 13px)."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Checklist row titles: app names, Time Machine, Herd."
+      },
+      "control": {
+        "displayName": "Control",
+        "purpose": "Capsule labels (500)."
+      },
+      "footnote": {
+        "displayName": "Footnote",
+        "purpose": "Verdict sentence, checklist sublines, storage values and legend, links, errors (12px)."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Status pill (11px/500)."
+      }
+    },
+    "shadows": [
+      {
+        "name": "platter-edge",
+        "value": "inset 0 0 0 0.5px var(--platter-edge)",
+        "purpose": "The platter boundary on top of the native glass."
+      },
+      {
+        "name": "control-edge",
+        "value": "inset 0 0 0 0.5px var(--control-edge)",
+        "purpose": "The boundary of a neutral capsule; not used by the primary capsule."
+      },
+      {
+        "name": "focus-ring",
+        "value": "outline: 2px solid color-mix(in srgb, var(--accent) 70%, transparent); outline-offset: 2px",
+        "purpose": "Keyboard focus for every button."
+      }
+    ],
+    "materials": [
+      {
+        "name": "window-glass",
+        "value": "Effect::LiquidGlassRegular, fallback Effect::UnderWindowBackground; EffectState::FollowsWindowActiveState",
+        "purpose": "The only blurred layer; installed natively in src-tauri/src/lib.rs show_detail, transparent webview."
+      },
+      {
+        "name": "window-chrome",
+        "value": "360x560 (DETAIL_HEIGHT), not resizable, TitleBarStyle::Overlay, hidden_title, traffic lights (18, 25)",
+        "purpose": "A draggable 46px titlebar; content starts at 76px."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The standard curve for every transition and meter animation."
+      },
+      {
+        "name": "control-press",
+        "value": "0.2s; transform scale(0.97) when pressed",
+        "purpose": "Capsule hover and press."
+      },
+      {
+        "name": "verdict-tone",
+        "value": "0.4s background-color and color",
+        "purpose": "The verdict badge changing between ok, warn, and idle."
+      },
+      {
+        "name": "meter-fill",
+        "value": "0.7s width",
+        "purpose": "Storage bar segments and the Time Machine progress meter."
+      },
+      {
+        "name": "meter-indeterminate",
+        "value": "1.4s infinite, 30% segment",
+        "purpose": "Backup progress without a percentage."
+      },
+      {
+        "name": "refresh-spin",
+        "value": "0.9s linear infinite",
+        "purpose": "The refresh icon while checking."
+      },
+      {
+        "name": "checklist-fade",
+        "value": "mask-image linear-gradient, last 14px to transparent",
+        "purpose": "Bottom edge of the checklist when it scrolls."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce turns off every animation and transition",
+        "purpose": "Accessibility."
+      }
+    ],
+    "iconGrid": {
+      "viewBox": "0 0 20 20",
+      "strokeWidth": 1.6,
+      "dotStrokeWidth": 2.2,
+      "glyphStrokeWidth": 2.4,
+      "linecap": "round",
+      "linejoin": "round",
+      "sizes": {
+        "verdictBadge": "22px",
+        "capsule": "15px",
+        "iconButton": "16px",
+        "checklistGlyph": "14px",
+        "appIconFallback": "18px",
+        "appIcon": "22px (real app icon image)"
+      },
+      "glyphKinds": {
+        "ok": "green filled circle, white check",
+        "auto": "Badge circle, Secondary stop square: handled automatically on eject",
+        "off": "Badge circle, Tertiary dash: not applicable"
+      },
+      "tray": "Monochrome template images in src-tauri/icons/tray/ (mounted, unmounted, backup, ejecting)."
+    },
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "Primary Capsule",
+      "kind": "button",
+      "refersTo": "capsule-primary",
+      "description": "One primary action per window (Eject SSD…), System Accent fill.",
+      "html": "<button class=\"ds-capsule ds-capsule-primary\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 20 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M10 3.8 16 11H4z\" fill=\"currentColor\" stroke=\"none\"/><rect x=\"4\" y=\"13.4\" width=\"12\" height=\"2.4\" rx=\"0.8\" fill=\"currentColor\" stroke=\"none\"/></svg>Eject SSD…</button>",
+      "css": ".ds-capsule { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 14px; border: none; border-radius: 999px; background: var(--control, rgba(0,0,0,.05)); box-shadow: inset 0 0 0 0.5px var(--control-edge, rgba(0,0,0,.06)); color: var(--label, rgba(0,0,0,.86)); font: 500 13px/1.35 -apple-system, BlinkMacSystemFont, system-ui, sans-serif; white-space: nowrap; transition: background-color .2s var(--ease-out, cubic-bezier(.16,1,.3,1)), transform .2s var(--ease-out, cubic-bezier(.16,1,.3,1)); } .ds-capsule svg { width: 15px; height: 15px; } .ds-capsule:hover { background: var(--control-hover, rgba(0,0,0,.09)); } .ds-capsule:active { transform: scale(.97); } .ds-capsule:focus-visible { outline: 2px solid color-mix(in srgb, var(--accent, #0a7aff) 70%, transparent); outline-offset: 2px; } .ds-capsule:disabled { opacity: .45; } .ds-capsule-primary { background: var(--accent, #0a7aff); color: var(--on-accent, #fff); box-shadow: none; } .ds-capsule-primary:hover { background: color-mix(in srgb, var(--accent, #0a7aff) 88%, white); }"
+    },
+    {
+      "name": "Neutral Capsule",
+      "kind": "button",
+      "refersTo": "capsule",
+      "description": "The secondary action in the footer (Open in Finder).",
+      "html": "<button class=\"ds-capsule\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 20 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M2.8 6.2a1.6 1.6 0 0 1 1.6-1.6h3.3l1.7 1.8h6.2a1.6 1.6 0 0 1 1.6 1.6v6.6a1.6 1.6 0 0 1-1.6 1.6H4.4a1.6 1.6 0 0 1-1.6-1.6z\"/></svg>Open in Finder</button>",
+      "css": ".ds-capsule { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 14px; border: none; border-radius: 999px; background: var(--control, rgba(0,0,0,.05)); box-shadow: inset 0 0 0 0.5px var(--control-edge, rgba(0,0,0,.06)); color: var(--label, rgba(0,0,0,.86)); font: 500 13px/1.35 -apple-system, BlinkMacSystemFont, system-ui, sans-serif; white-space: nowrap; transition: background-color .2s var(--ease-out, cubic-bezier(.16,1,.3,1)), transform .2s var(--ease-out, cubic-bezier(.16,1,.3,1)); } .ds-capsule svg { width: 15px; height: 15px; } .ds-capsule:hover { background: var(--control-hover, rgba(0,0,0,.09)); } .ds-capsule:active { transform: scale(.97); } .ds-capsule:focus-visible { outline: 2px solid color-mix(in srgb, var(--accent, #0a7aff) 70%, transparent); outline-offset: 2px; } .ds-capsule:disabled { opacity: .45; }"
+    },
+    {
+      "name": "Small Capsule",
+      "kind": "button",
+      "refersTo": "capsule-small",
+      "description": "The trailing action of a checklist row (Back Up / Skip).",
+      "html": "<button class=\"ds-capsule ds-capsule-small\">Back Up</button>",
+      "css": ".ds-capsule { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 14px; border: none; border-radius: 999px; background: var(--control, rgba(0,0,0,.05)); box-shadow: inset 0 0 0 0.5px var(--control-edge, rgba(0,0,0,.06)); color: var(--label, rgba(0,0,0,.86)); font: 500 13px/1.35 -apple-system, BlinkMacSystemFont, system-ui, sans-serif; white-space: nowrap; transition: background-color .2s var(--ease-out, cubic-bezier(.16,1,.3,1)), transform .2s var(--ease-out, cubic-bezier(.16,1,.3,1)); } .ds-capsule svg { width: 15px; height: 15px; } .ds-capsule:hover { background: var(--control-hover, rgba(0,0,0,.09)); } .ds-capsule:active { transform: scale(.97); } .ds-capsule:focus-visible { outline: 2px solid color-mix(in srgb, var(--accent, #0a7aff) 70%, transparent); outline-offset: 2px; } .ds-capsule:disabled { opacity: .45; } .ds-capsule-small { height: 26px; padding: 0 12px; font-size: 12px; }"
+    },
+    {
+      "name": "Icon Button",
+      "kind": "button",
+      "refersTo": "icon-button",
+      "description": "A transparent 28px circle in the titlebar (refresh).",
+      "html": "<button class=\"ds-icon-button\" aria-label=\"Refresh status\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 20 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M16.2 9.4A6.3 6.3 0 0 0 4.9 6.1\"/><path d=\"M4.4 2.9v3.6H8\"/><path d=\"M3.8 10.6a6.3 6.3 0 0 0 11.3 3.3\"/><path d=\"M15.6 17.1v-3.6H12\"/></svg></button>",
+      "css": ".ds-icon-button { display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border: none; border-radius: 999px; background: transparent; color: var(--secondary, rgba(0,0,0,.58)); } .ds-icon-button:hover { background: var(--control, rgba(0,0,0,.05)); color: var(--label, rgba(0,0,0,.86)); } .ds-icon-button:focus-visible { outline: 2px solid color-mix(in srgb, var(--accent, #0a7aff) 70%, transparent); outline-offset: 2px; }"
+    },
+    {
+      "name": "Native Link",
+      "kind": "button",
+      "refersTo": "link",
+      "description": "A 12px text link in the NSColor.linkColor color; the trailing Show on an app row.",
+      "html": "<button class=\"ds-link\">Show</button>",
+      "css": ".ds-link { padding: 0; border: none; background: none; color: var(--link, #0068da); font: 12px/1.35 -apple-system, BlinkMacSystemFont, system-ui, sans-serif; cursor: default; } .ds-link:hover { text-decoration: underline; text-underline-offset: 2px; } .ds-link:focus-visible { outline: 2px solid color-mix(in srgb, var(--accent, #0a7aff) 70%, transparent); outline-offset: 2px; }"
+    },
+    {
+      "name": "Status Pill",
+      "kind": "chip",
+      "refersTo": "pill-status",
+      "description": "A status marker in the titlebar, e.g. dry-run mode.",
+      "html": "<span class=\"ds-pill\">Dry run</span>",
+      "css": ".ds-pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font: 500 11px/1.35 -apple-system, BlinkMacSystemFont, system-ui, sans-serif; color: var(--warn, #a35200); background: color-mix(in srgb, var(--warn, #a35200) 16%, transparent); }"
+    },
+    {
+      "name": "Verdict Hero",
+      "kind": "custom",
+      "refersTo": "hero-badge",
+      "description": "The window's one answer: 44px tone badge, 17px title, 12px sentence. Tones ok / warn / idle.",
+      "html": "<section class=\"ds-hero ds-ok\"><span class=\"ds-hero-badge\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 20 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3.2 10.5 5.4 5.6A1.6 1.6 0 0 1 6.9 4.6h6.2a1.6 1.6 0 0 1 1.5 1l2.2 4.9\"/><rect x=\"2.6\" y=\"10.4\" width=\"14.8\" height=\"5.4\" rx=\"1.8\"/><path d=\"M13.6 13.1h.01M11.4 13.1h.01\" stroke-width=\"2.2\"/></svg></span><h1>Ready to eject</h1><p>Herd will be stopped first.</p></section>",
+      "css": ".ds-hero { display: flex; flex-direction: column; align-items: center; gap: 2px; width: 336px; text-align: center; color: var(--label, rgba(0,0,0,.86)); font: 13px/1.35 -apple-system, BlinkMacSystemFont, system-ui, sans-serif; -webkit-font-smoothing: antialiased; } .ds-hero-badge { display: grid; place-items: center; width: 44px; height: 44px; margin-bottom: 6px; border-radius: 50%; background: var(--badge, rgba(0,0,0,.06)); color: var(--secondary, rgba(0,0,0,.58)); transition: background-color .4s var(--ease-out, cubic-bezier(.16,1,.3,1)), color .4s var(--ease-out, cubic-bezier(.16,1,.3,1)); } .ds-ok .ds-hero-badge { color: var(--ok, #1a7f37); background: color-mix(in srgb, var(--ok, #1a7f37) 16%, transparent); } .ds-warn .ds-hero-badge { color: var(--warn, #a35200); background: color-mix(in srgb, var(--warn, #a35200) 16%, transparent); } .ds-hero h1 { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; } .ds-hero p { margin: 0; font-size: 12px; color: var(--secondary, rgba(0,0,0,.58)); }"
+    },
+    {
+      "name": "Eject Checklist",
+      "kind": "card",
+      "refersTo": "checklist-platter",
+      "description": "One platter, one row per blocker: holding apps (real icon + orange dot + Show), Time Machine, Herd; glyphs ok / auto / off; hairlines from 32px.",
+      "html": "<section class=\"ds-platter ds-check\"><ul><li><div class=\"ds-row\"><span class=\"ds-app\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 20 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"3.4\" y=\"3.4\" width=\"13.2\" height=\"13.2\" rx=\"3.4\"/><path d=\"M7 8.2 9 10l-2 1.8M10.8 12h2.4\"/></svg><span class=\"ds-dot\"></span></span><div class=\"ds-stack\"><span class=\"ds-t\">Visual Studio Code</span><span class=\"ds-sub\">Code/ssd-workspace · 3 processes</span></div><button class=\"ds-link\">Show</button></div></li><li><div class=\"ds-row\"><span class=\"ds-glyph ds-g-ok\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 20 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m5.6 10.4 2.9 2.9 5.9-6.6\"/></svg></span><div class=\"ds-stack\"><span class=\"ds-t\">Time Machine idle</span><span class=\"ds-sub\">Latest backup: Today, 09:12</span></div><button class=\"ds-small\">Back Up</button></div></li><li><div class=\"ds-row\"><span class=\"ds-glyph ds-g-auto\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 20 20\" aria-hidden=\"true\"><rect x=\"6.4\" y=\"6.4\" width=\"7.2\" height=\"7.2\" rx=\"1.4\" fill=\"currentColor\"/></svg></span><div class=\"ds-stack\"><span class=\"ds-t\">Herd is running</span><span class=\"ds-sub\">Will be stopped</span></div></div></li></ul></section>",
+      "css": ".ds-check { width: 336px; padding: 4px 12px; border-radius: 16px; background: var(--platter, rgba(255,255,255,.22)); box-shadow: inset 0 0 0 0.5px var(--platter-edge, rgba(0,0,0,.06)); color: var(--label, rgba(0,0,0,.86)); font: 13px/1.35 -apple-system, BlinkMacSystemFont, system-ui, sans-serif; -webkit-font-smoothing: antialiased; } .ds-check ul { list-style: none; margin: 0; padding: 0; } .ds-check li { padding: 7px 0; } .ds-check li + li { background: linear-gradient(var(--hairline, rgba(0,0,0,.07)), var(--hairline, rgba(0,0,0,.07))) 32px 0 / calc(100% - 32px) 0.5px no-repeat; } .ds-row { display: flex; align-items: center; gap: 10px; min-width: 0; } .ds-stack { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; } .ds-t, .ds-sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .ds-sub { font-size: 12px; color: var(--secondary, rgba(0,0,0,.58)); font-variant-numeric: tabular-nums; } .ds-glyph, .ds-app { flex: none; display: grid; place-items: center; width: 22px; height: 22px; } .ds-glyph { border-radius: 50%; color: #fff; } .ds-g-ok { background: var(--ok, #1a7f37); } .ds-g-auto { background: var(--badge, rgba(0,0,0,.06)); color: var(--secondary, rgba(0,0,0,.58)); } .ds-app { position: relative; color: var(--secondary, rgba(0,0,0,.58)); } .ds-dot { position: absolute; right: -2px; bottom: -1px; width: 9px; height: 9px; border-radius: 50%; background: var(--warn, #a35200); } .ds-link { padding: 0; border: none; background: none; color: var(--link, #0068da); font: 12px/1.35 -apple-system, BlinkMacSystemFont, system-ui, sans-serif; } .ds-link:hover { text-decoration: underline; text-underline-offset: 2px; } .ds-small { height: 26px; padding: 0 12px; border: none; border-radius: 999px; background: var(--control, rgba(0,0,0,.05)); box-shadow: inset 0 0 0 0.5px var(--control-edge, rgba(0,0,0,.06)); color: var(--label, rgba(0,0,0,.86)); font: 500 12px/1.35 -apple-system, BlinkMacSystemFont, system-ui, sans-serif; } .ds-small:hover { background: var(--control-hover, rgba(0,0,0,.09)); } .ds-link:focus-visible, .ds-small:focus-visible { outline: 2px solid color-mix(in srgb, var(--accent, #0a7aff) 70%, transparent); outline-offset: 2px; }"
+    },
+    {
+      "name": "Storage Bar",
+      "kind": "card",
+      "refersTo": "meter-stacked",
+      "description": "The APFS container as one 8px stacked capsule: Workspace (accent), Backup (purple), other volumes, free as track; legend below.",
+      "html": "<section class=\"ds-platter ds-storage\"><div class=\"ds-row\"><span class=\"ds-t\">Storage</span><span class=\"ds-val\">774 GB free of 1000 GB</span></div><div class=\"ds-bar\"><div class=\"ds-seg ds-ws\" style=\"width:14%\"></div><div class=\"ds-seg ds-bk\" style=\"width:8%\"></div><div class=\"ds-seg ds-ot\" style=\"width:0.6%\"></div></div><div class=\"ds-legend\"><span><i class=\"ds-ws\"></i>Workspace 140 GB</span><span><i class=\"ds-bk\"></i>Backup 80 GB</span></div></section>",
+      "css": ".ds-storage { display: flex; flex-direction: column; gap: 8px; width: 336px; padding: 12px; border-radius: 16px; background: var(--platter, rgba(255,255,255,.22)); box-shadow: inset 0 0 0 0.5px var(--platter-edge, rgba(0,0,0,.06)); color: var(--label, rgba(0,0,0,.86)); font: 13px/1.35 -apple-system, BlinkMacSystemFont, system-ui, sans-serif; -webkit-font-smoothing: antialiased; } .ds-storage .ds-row { display: flex; align-items: center; } .ds-storage .ds-t { font-weight: 600; } .ds-val { margin-left: auto; color: var(--secondary, rgba(0,0,0,.58)); font-variant-numeric: tabular-nums; } .ds-bar { display: flex; gap: 1.5px; height: 8px; border-radius: 999px; background: var(--track, rgba(0,0,0,.09)); overflow: hidden; } .ds-seg { height: 100%; transition: width .7s var(--ease-out, cubic-bezier(.16,1,.3,1)); } .ds-seg:last-child { border-radius: 0 999px 999px 0; } .ds-ws { background: var(--accent, #0a7aff); } .ds-bk { background: var(--seg-backup, #a550d3); } .ds-ot { background: var(--seg-other, rgba(0,0,0,.22)); } .ds-legend { display: flex; gap: 14px; font-size: 12px; color: var(--secondary, rgba(0,0,0,.58)); font-variant-numeric: tabular-nums; } .ds-legend span { display: inline-flex; align-items: center; gap: 6px; } .ds-legend i { width: 8px; height: 8px; border-radius: 50%; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "One Glass Panel",
+    "overview": "The Detail window is a single macOS 26 Control Center module, not a web page of cards. Its ground is native Liquid Glass (Regular variant) that Tauri installs behind a transparent webview; the page only lays thin, transparent content platters on top of that glass, with no second blur. Every neutral color is derived from the glass through alpha labels, so the panel turns light or dark with the system and tints itself from the wallpaper behind it.\n\nThe window answers one question, \"can I eject the SSD right now?\", and reads as an eject checklist: a centered verdict at the top, then one platter with a row per thing that stands between the user and a safe eject (each app holding the SSD, Time Machine, Herd), then the storage summary and the actions. Its density is the density of a system utility: a fixed 360×560 window, 13px text, 30px capsule controls, one column. One 17px verdict title is the only large text; everything else is 11–13px and ranked by weight and label alpha. Color has three jobs: the system accent for the primary action and progress, green/orange/red for status, and two quiet segment colors that tell the volumes apart in the storage bar.\n\nThe corners are concentric: the native window corner (about 26px) hugs 16px platters that sit 12px from the edge, and every control is a full capsule; badges and glyphs are circles. Icons are SF Symbols-style lines on a 20×20 grid with a uniform 1.6 stroke.",
+    "keyCharacteristics": [
+      "Native Liquid Glass as the only blurred surface; the platters on top of it are transparent.",
+      "Alpha neutrals (label/secondary/tertiary) read on top of glass, with complete light/dark pairs.",
+      "Concentric radii: window ~26, platter 16, capsule controls 999px, round badges and glyphs.",
+      "One verdict, shared with the tray menu header, counted in apps rather than processes.",
+      "SF system font at 11–13px plus one 17px verdict title; tabular figures for every value.",
+      "System accent (AccentColor) only for the primary action, the Workspace segment, and progress.",
+      "20×20 line icons, 1.6 stroke, rounded caps and joins."
+    ],
+    "rules": [
+      {
+        "name": "The Glass-Derived Neutral Rule",
+        "body": "Every neutral is black or white with alpha, never a solid gray; the glass behind it supplies the color. Every neutral token must have a dark pair.",
+        "section": "colors"
+      },
+      {
+        "name": "The Status-Only Hue Rule",
+        "body": "Green, orange, and red only state status. The primary action uses the System Accent; there are no green or red buttons.",
+        "section": "colors"
+      },
+      {
+        "name": "The Segment Hue Rule",
+        "body": "Backup Purple and Other Volumes exist only to tell volumes apart inside the storage bar and its legend; they never mark status, and never fill a control.",
+        "section": "colors"
+      },
+      {
+        "name": "The Native Link Rule",
+        "body": "Links use the value of `NSColor.linkColor`, not web blue; it rejects the \"visited\" purple and is only underlined on hover.",
+        "section": "colors"
+      },
+      {
+        "name": "The Weight-Not-Size Rule",
+        "body": "Apart from the one 17px verdict title, the size range is only 11–13px. Hierarchy is built with weight (600/500/400) and label alpha, never with another large heading.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Every number that can change uses `font-variant-numeric: tabular-nums` so rows do not shift when the status updates.",
+        "section": "typography"
+      },
+      {
+        "name": "The Glyph-Column Rule",
+        "body": "Everything that belongs to a checklist row but is not its glyph (sub-content, hairline separators) starts at 32px, the text column; it never starts at the platter edge.",
+        "section": "layout"
+      },
+      {
+        "name": "The Single Blur Rule",
+        "body": "The native glass is the only blur. The webview stays transparent and never adds a `backdrop-filter` on top of it.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Hairline Edge Rule",
+        "body": "A surface boundary is a 0.5px inner line with alpha, not a solid border and not a drop shadow.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Concentric Rule",
+        "body": "Inner radius = outer radius minus the distance between them; elements inside a platter never use a corner larger than the platter's, except capsules and circles, which are fully rounded by nature.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** let native Liquid Glass be the only blurred surface and put content on transparent 16px platters.",
+      "**Do** give every color token a dark pair and build neutrals from black/white with alpha.",
+      "**Do** use capsules (999px) for every control and circles for badges, glyphs, and dots.",
+      "**Do** use the System Accent (`AccentColor`) for one primary action per window, the Workspace segment, and progress.",
+      "**Do** state eject readiness once, as the verdict, and count it in apps, the same way the tray menu header does.",
+      "**Do** mark each checklist row with one of the three glyph kinds (ok, auto, off), or a real app icon with the holder dot.",
+      "**Do** use the value of `NSColor.linkColor` for links and tabular figures for every value.",
+      "**Do** draw new icons on the 20×20 grid, 1.6 stroke, rounded caps, `currentColor`.",
+      "**Do** turn off every animation and transition under `prefers-reduced-motion: reduce`."
+    ],
+    "donts": [
+      "**Don't** add `backdrop-filter` or a second blur in the webview on top of the native glass.",
+      "**Don't** stack solid white cards on a gray background; platters are always transparent.",
+      "**Don't** use green, orange, or red for buttons; those colors are status only.",
+      "**Don't** use the segment colors outside the storage bar and its legend.",
+      "**Don't** use CSS `LinkText` or web blue/purple for links.",
+      "**Don't** use drop shadows for depth; a surface boundary is a 0.5px inner line.",
+      "**Don't** write a window title on the page; the titlebar only holds the traffic lights, the status pill, and the refresh button, and the verdict carries the window.",
+      "**Don't** list raw processes or PIDs; holders are shown as apps.",
+      "**Don't** use Tertiary Label for text that has to be read; it is for inactive states only."
+    ]
+  }
+}

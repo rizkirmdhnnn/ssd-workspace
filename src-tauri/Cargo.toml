@@ -1,0 +1,43 @@
+[package]
+name = "ssd-workspace"
+version = "0.1.0"
+description = "A macOS menu bar app to see what holds an external SSD and eject it safely"
+authors = ["Achmad Rizki Ramadhan"]
+license = "MIT"
+repository = "https://github.com/rizkirmdhnnn/ssd-workspace"
+edition = "2024"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "ssd_workspace_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["image-png", "macos-private-api", "tray-icon"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri-plugin-dialog = "2"
+tauri-plugin-autostart = "2"
+libc = "0.2.191"
+objc2 = "0.6"
+objc2-foundation = "0.3"
+objc2-app-kit = { version = "0.3", default-features = false, features = ["std", "block2", "NSApplication", "NSAttributedString", "NSBezierPath", "NSBitmapImageRep", "NSColor", "NSFont", "NSGraphicsContext", "NSImage", "NSImageRep", "NSMenu", "NSMenuItem", "NSRunningApplication", "NSResponder", "NSWorkspace", "objc2-core-graphics"] }
+block2 = "0.6"
+plist = "1"
+
+
+# Read the optimization guideline for more details: https://tauri.app/concept/size/#cargo-configuration
+[profile.release]
+codegen-units = 1
+lto = true
+# Optimize for size: nothing here is CPU-bound, and a smaller binary means fewer resident pages.
+opt-level = "s"
+panic = "abort"
+strip = true

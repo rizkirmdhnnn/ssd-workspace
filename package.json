@@ -1,0 +1,25 @@
+{
+  "name": "ssd-workspace",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A macOS menu bar app to see what holds an external SSD and eject it safely",
+  "license": "MIT",
+  "repository": "github:rizkirmdhnnn/ssd-workspace",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2",
+    "preact": "^11.2.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "typescript": "~6.0.3",
+    "vite": "^8.0.16"
+  },
+  "packageManager": "pnpm@12.18.0"
+}

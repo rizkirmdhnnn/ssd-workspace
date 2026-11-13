@@ -1,0 +1,554 @@
+/* Liquid Glass (macOS 26+): Tauri installs the native glass behind a transparent webview.
+   This page only lays thin content platters on top of it (no second blur), with radii
+   concentric to the window corners. */
+
+:root {
+  color-scheme: light dark;
+
+  --label: rgba(0, 0, 0, 0.86);
+  --secondary: rgba(0, 0, 0, 0.58);
+  --tertiary: rgba(0, 0, 0, 0.32);
+  --platter: rgba(255, 255, 255, 0.22);
+  --platter-edge: rgba(0, 0, 0, 0.06);
+  --control: rgba(0, 0, 0, 0.05);
+  --control-hover: rgba(0, 0, 0, 0.09);
+  --control-edge: rgba(0, 0, 0, 0.06);
+  --track: rgba(0, 0, 0, 0.09);
+  --hairline: rgba(0, 0, 0, 0.07);
+  --badge: rgba(0, 0, 0, 0.06);
+
+  --accent: #0a7aff;
+  --on-accent: #fff;
+  --ok: #1a7f37;
+  --warn: #a35200;
+  --danger: #d70015;
+  --seg-backup: #a550d3;
+  --seg-other: rgba(0, 0, 0, 0.22);
+
+  --inset: 12px;
+  --r-platter: 16px;
+  --r-control: 999px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@supports (color: AccentColor) {
+  :root {
+    --accent: AccentColor;
+    --on-accent: AccentColorText;
+  }
+}
+
+/* NSColor.linkColor (not CSS LinkText, which in WebKit is the classic web blue/purple). */
+:root {
+  --link: #0068da;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --link: #419cff;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --label: rgba(255, 255, 255, 0.9);
+    --secondary: rgba(255, 255, 255, 0.62);
+    --tertiary: rgba(255, 255, 255, 0.3);
+    --platter: rgba(255, 255, 255, 0.07);
+    --platter-edge: rgba(255, 255, 255, 0.09);
+    --control: rgba(255, 255, 255, 0.12);
+    --control-hover: rgba(255, 255, 255, 0.2);
+    --control-edge: rgba(255, 255, 255, 0.1);
+    --track: rgba(255, 255, 255, 0.12);
+    --hairline: rgba(255, 255, 255, 0.08);
+    --badge: rgba(255, 255, 255, 0.1);
+    --ok: #32d74b;
+    --warn: #ffb340;
+    --danger: #ff6961;
+    --seg-backup: #c37ef0;
+    --seg-other: rgba(255, 255, 255, 0.28);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: transparent;
+}
+
+body {
+  color: var(--label);
+  font: 13px/1.35 -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+  overflow: hidden;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  padding: 0 var(--inset) var(--inset);
+}
+
+main.loading {
+  align-items: center;
+}
+
+/* ---------- Titlebar (traffic lights float on the left) ---------- */
+
+.titlebar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 46px;
+  flex: none;
+  align-self: stretch;
+  padding-left: 76px;
+}
+
+.pill {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: var(--r-control);
+  color: var(--warn);
+  background: color-mix(in srgb, var(--warn) 16%, transparent);
+}
+
+.icon-button {
+  margin-left: auto;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: var(--r-control);
+  color: var(--secondary);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.icon-button:hover:not(:disabled) {
+  background: var(--control);
+  color: var(--label);
+}
+
+/* ---------- Verdict ---------- */
+
+.hero {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-top: -10px;
+  padding-bottom: 6px;
+  text-align: center;
+}
+
+.hero-badge {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 6px;
+  border-radius: 50%;
+  background: var(--badge);
+  color: var(--secondary);
+  transition:
+    background-color 0.4s var(--ease-out),
+    color 0.4s var(--ease-out);
+}
+
+.hero-badge svg {
+  width: 22px;
+  height: 22px;
+}
+
+.hero.ok .hero-badge {
+  color: var(--ok);
+  background: color-mix(in srgb, var(--ok) 16%, transparent);
+}
+
+.hero.warn .hero-badge {
+  color: var(--warn);
+  background: color-mix(in srgb, var(--warn) 16%, transparent);
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.hero p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--secondary);
+}
+
+/* ---------- Platter ---------- */
+
+.platter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: var(--r-platter);
+  background: var(--platter);
+  box-shadow: inset 0 0 0 0.5px var(--platter-edge);
+}
+
+/* As tall as its rows; shrinks (and scrolls) only when the window runs out of room. */
+.grow {
+  flex: 0 1 auto;
+  min-height: 0;
+  padding: 4px 12px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.grow-x {
+  flex: 1;
+}
+
+.right {
+  margin-left: auto;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.secondary {
+  color: var(--secondary);
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Checklist ---------- */
+
+.checklist {
+  list-style: none;
+  margin: 0 -12px;
+  padding: 0 12px;
+  overflow-y: auto;
+  min-height: 0;
+  flex: 1;
+  /* Rows that scroll out of view fade at the edge instead of being cut. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 14px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 14px), transparent);
+  padding-bottom: 6px;
+}
+
+.checklist li {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 7px 0;
+}
+
+/* Hairline between rows, starting under the text (not under the glyph). */
+.checklist li + li {
+  background: linear-gradient(var(--hairline), var(--hairline)) 32px 0 / calc(100% - 32px) 0.5px
+    no-repeat;
+}
+
+.checklist .title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.checklist .sub {
+  font-size: 12px;
+  color: var(--secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.glyph,
+.app-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+}
+
+.glyph {
+  border-radius: 50%;
+  color: #fff;
+}
+
+.glyph svg {
+  width: 14px;
+  height: 14px;
+}
+
+.glyph.ok {
+  background: var(--ok);
+}
+
+.glyph.auto {
+  background: var(--badge);
+  color: var(--secondary);
+}
+
+.glyph.off {
+  background: var(--badge);
+  color: var(--tertiary);
+}
+
+.app-icon {
+  position: relative;
+  color: var(--secondary);
+}
+
+.app-icon img {
+  width: 22px;
+  height: 22px;
+}
+
+.app-icon > svg {
+  width: 18px;
+  height: 18px;
+}
+
+.badge-dot {
+  position: absolute;
+  right: -2px;
+  bottom: -1px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--warn);
+}
+
+.indent {
+  margin-left: 32px;
+}
+
+/* ---------- Meters ---------- */
+
+.meter {
+  height: 6px;
+  border-radius: var(--r-control);
+  background: var(--track);
+  overflow: hidden;
+}
+
+.meter.thin {
+  height: 4px;
+}
+
+.meter > div {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width 0.7s var(--ease-out);
+}
+
+.meter.indeterminate > div {
+  width: 30%;
+  animation: slide 1.4s var(--ease-out) infinite;
+}
+
+/* APFS container: Workspace + Backup + other volumes, the rest of the track is free. */
+.meter.stacked {
+  display: flex;
+  gap: 1.5px;
+  height: 8px;
+}
+
+.meter.stacked > .seg {
+  border-radius: 0;
+}
+
+.meter.stacked > .seg:last-child {
+  border-radius: 0 var(--r-control) var(--r-control) 0;
+}
+
+.seg.ws,
+.legend i.ws {
+  background: var(--accent);
+}
+
+.seg.bk,
+.legend i.bk {
+  background: var(--seg-backup);
+}
+
+.seg.other {
+  background: var(--seg-other);
+}
+
+.storage {
+  flex: none;
+  margin-top: auto;
+}
+
+.legend {
+  display: flex;
+  gap: 14px;
+  font-size: 12px;
+  color: var(--secondary);
+}
+
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* ---------- Controls ---------- */
+
+button {
+  font: inherit;
+  color: var(--label);
+}
+
+.capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 14px;
+  border: none;
+  border-radius: var(--r-control);
+  background: var(--control);
+  box-shadow: inset 0 0 0 0.5px var(--control-edge);
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s var(--ease-out),
+    transform 0.2s var(--ease-out);
+}
+
+.capsule svg {
+  width: 15px;
+  height: 15px;
+}
+
+.capsule:hover:not(:disabled) {
+  background: var(--control-hover);
+}
+
+.capsule:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.capsule.primary {
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: none;
+}
+
+.capsule.primary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent) 88%, white);
+}
+
+.capsule.small {
+  height: 26px;
+  padding: 0 12px;
+  font-size: 12px;
+}
+
+.link {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--link);
+  font-size: 12px;
+}
+
+.link:hover:not(:disabled) {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.45;
+}
+
+button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 70%, transparent);
+  outline-offset: 2px;
+}
+
+footer {
+  flex: none;
+}
+
+.error {
+  margin: 0;
+  font-size: 12px;
+  color: var(--danger);
+}
+
+/* ---------- Motion ---------- */
+
+.spin {
+  animation: turn 0.9s linear infinite;
+}
+
+@keyframes turn {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(340%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
