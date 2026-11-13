@@ -78,6 +78,9 @@ cargo test real_holders_and_storage -- --ignored --nocapture
 would change the system panics, and the test checks that the disk stays mounted and Herd's
 state does not change.
 
+The menu bar icons in `src-tauri/icons/tray/` are rendered from SF Symbols by
+`swift scripts/tray-icons.swift`; edit that script rather than the PNGs.
+
 To build the app bundle:
 
 ```sh
