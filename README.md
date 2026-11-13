@@ -39,9 +39,24 @@ bar tidy.
 
 ## Install
 
-There are no prebuilt releases yet, so build the app from source. You need
-[Rust](https://rustup.rs), [Node.js](https://nodejs.org) with [pnpm](https://pnpm.io), and the
-Xcode Command Line Tools (`xcode-select --install`).
+### Download
+
+1. Download `SSD-Workspace-<version>-universal.zip` from the
+   [latest release](https://github.com/rizkirmdhnnn/ssd-workspace/releases/latest)
+   (one app for Apple Silicon and Intel Macs).
+2. Unzip it and move **SSD Workspace.app** to `~/Applications` or `/Applications`.
+3. Open it. The app is not notarized by Apple, so the first time macOS says it cannot be
+   opened. Go to **System Settings → Privacy & Security**, scroll to the message about
+   SSD Workspace and click **Open Anyway**. Alternatively, in Terminal:
+
+   ```sh
+   xattr -dr com.apple.quarantine ~/Applications/"SSD Workspace.app"
+   ```
+
+### Build from source
+
+You need [Rust](https://rustup.rs), [Node.js](https://nodejs.org) with [pnpm](https://pnpm.io),
+and the Xcode Command Line Tools (`xcode-select --install`).
 
 ```sh
 git clone https://github.com/rizkirmdhnnn/ssd-workspace.git
@@ -55,9 +70,6 @@ open ~/Applications/"SSD Workspace.app"
 Build and install from a folder that is **not** on the SSD you want to manage, or at least
 run the copy in `~/Applications`, not the one in `target/`. An app can't eject the disk it
 is running from.
-
-The app is ad-hoc signed. It runs fine on the Mac that built it; to copy it to another Mac,
-build it there or sign it with your own Developer ID.
 
 To start it at login, choose **Options → Open at Login** in its menu. This adds a LaunchAgent
 (`~/Library/LaunchAgents/SSD Workspace.plist`).

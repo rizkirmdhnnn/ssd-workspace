@@ -22,3 +22,6 @@ First public release.
   (grouped by app, with icons and Show), Time Machine and Herd, and an APFS storage bar.
 - `config.json` to choose the workspace and backup volume names.
 - Open at Login, dry-run mode and state simulation for development, `SSD_WORKSPACE_TRACE`.
+
+[Unreleased]: https://github.com/rizkirmdhnnn/ssd-workspace/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/rizkirmdhnnn/ssd-workspace/releases/tag/v0.1.0
