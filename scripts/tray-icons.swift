@@ -1,6 +1,6 @@
 // Renders the menu bar icons in src-tauri/icons/tray/ from SF Symbols.
 //
-//   swift scripts/tray-icons.swift [point size]   (default 14; 15 is the largest that fits)
+//   swift scripts/tray-icons.swift [point size]   (default 15, the largest that fits)
 //
 // tray-icon shows the icon at a fixed height of 18 pt and derives the width from the image's
 // aspect ratio. So each image is 36 px tall (18 pt at 2x) with the symbol filling it, and all
@@ -8,7 +8,7 @@
 // black on transparent and used as template images (macOS tints them for light/dark).
 import AppKit
 
-let pointSize = CommandLine.arguments.count > 1 ? CGFloat(Double(CommandLine.arguments[1])!) : 14
+let pointSize = CommandLine.arguments.count > 1 ? CGFloat(Double(CommandLine.arguments[1])!) : 15
 let scale: CGFloat = 2
 let heightPx = 18 * scale
 let out = URL(fileURLWithPath: #filePath)
