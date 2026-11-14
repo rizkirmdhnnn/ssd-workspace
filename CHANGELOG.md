@@ -16,6 +16,11 @@ All notable changes to this project are documented here. The format follows
 - The menu and the Detail window no longer say "Ready to eject" while Time Machine is backing
   up to the SSD; they say "Backing up" instead.
 
+### Changed
+
+- Eject is disabled while Time Machine backs up to the SSD, so a backup is never cut short.
+  Wait for it to finish or choose Skip This Backup first.
+
 ## [0.1.0] - 2026-11-13
 
 First public release.

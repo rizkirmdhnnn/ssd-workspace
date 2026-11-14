@@ -97,6 +97,11 @@ can show a verdict immediately.
 the whole flow is unit-tested against a mock, and an ignored test runs it against the real
 system with every state-changing action replaced by a `panic!`.
 
+Eject is disabled (menu item, Detail button and `start_eject` itself) while Time Machine is
+backing up to the backup volume on the SSD (`Snapshot::backing_up_to_ssd`): stopping it would
+cut the backup short. The steps below still stop a backup that targets another disk or that
+started after the eject began.
+
 1. The workspace volume is not mounted → an info dialog, done.
 2. Confirmation. The dialog names the volumes that will be unmounted, says whether Herd will
    be stopped, and warns when a Time Machine backup is running (the button then reads

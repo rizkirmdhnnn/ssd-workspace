@@ -149,7 +149,8 @@ fn build_menu(app: &AppHandle, s: &Snapshot) -> tauri::Result<BuiltMenu> {
             } else {
                 "Eject SSD…"
             },
-            !s.busy,
+            // Ejecting would cut a backup to the SSD short: wait for it, or skip it.
+            !s.busy && !s.backing_up_to_ssd(),
             Some("CmdOrCtrl+E"),
         )?));
         items.push(Box::new(action(

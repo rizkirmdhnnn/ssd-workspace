@@ -221,7 +221,7 @@ impl ProgressView {
             .remaining_text
             .as_deref()
             .unwrap_or(if snap.backing_up_to_ssd() {
-                "Ejecting the SSD stops the backup"
+                "Eject is available when the backup is done"
             } else {
                 ""
             });

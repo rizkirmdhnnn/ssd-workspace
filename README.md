@@ -20,9 +20,10 @@ bar tidy.
 - **Knows who is holding the SSD.** Processes are grouped by app, so you see "Terminal" and
   "Zed" instead of `bash`, `node` and PIDs, along with the folder each app is working in.
   **Show** brings an app to the front so you can close it yourself.
-- **Safe eject.** Always asks first. Stops a running Time Machine backup and running Herd
-  services, then ejects the whole disk. If something still holds the SSD, it tells you what
-  and lets you try again. User processes are never killed.
+- **Safe eject.** Always asks first. Eject is unavailable while Time Machine backs up to the
+  SSD (wait for it, or skip the backup). Stops running Herd services, then ejects the whole
+  disk. If something still holds the SSD, it tells you what and lets you try again. User
+  processes are never killed.
 - **Time Machine menu.** Latest backup, Back Up Now, live progress with Skip This Backup,
   Browse Backups and Time Machine Settings, in the same menu.
 - **Native and light.** Liquid Glass Detail window, SF Symbols in the menu, light and dark

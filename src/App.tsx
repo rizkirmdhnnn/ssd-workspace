@@ -65,7 +65,7 @@ function verdict(
     return {
       tone: "warn",
       title: "Backing up",
-      sub: "Wait for Time Machine to finish. Ejecting now stops the backup.",
+      sub: "You can eject once Time Machine is done, or skip this backup.",
     };
   const stopped = [s.tm.running && "Time Machine", s.herd_running && "Herd"].filter(Boolean);
   return {
@@ -177,7 +177,7 @@ function TimeMachineItem({ s }: { s: DetailStatus }) {
           <div style={{ width: pct === null ? undefined : `${pct}%` }} />
         </div>
         <p className="sub indent caption">
-          {tm.remaining_text ?? "Ejecting the SSD stops the backup"}
+          {tm.remaining_text ?? "Eject is available when the backup is done"}
         </p>
       </Item>
     );
@@ -334,6 +334,7 @@ export default function App() {
   }
 
   const v = verdict(status, mounted ? holders : []);
+  const backingUp = backingUpToSsd(status);
 
   return (
     <main>
@@ -397,7 +398,8 @@ export default function App() {
         <button
           className="capsule primary right"
           onClick={() => ejectSsd().catch((e) => setError(String(e)))}
-          disabled={!mounted || status.busy}
+          disabled={!mounted || status.busy || backingUp}
+          title={backingUp ? "Available when the Time Machine backup is done" : undefined}
         >
           <EjectIcon />
           {status.busy ? "Ejecting…" : "Eject SSD…"}

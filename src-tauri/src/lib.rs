@@ -428,6 +428,16 @@ impl eject::Env for TauriEnv<'_> {
 /// Start the eject flow on a background thread (the UI stays responsive). Only one at a time.
 pub fn start_eject(app: &AppHandle) {
     let st = state(app);
+    // Eject is disabled while Time Machine backs up to the SSD (menu and Detail window).
+    let backing_up = st
+        .snapshot
+        .lock()
+        .unwrap()
+        .as_ref()
+        .is_some_and(Snapshot::backing_up_to_ssd);
+    if backing_up {
+        return;
+    }
     if st.busy.swap(true, Ordering::SeqCst) {
         return;
     }
