@@ -26,6 +26,8 @@ pub enum Phase {
     Preparing,
     Copying,
     Finishing,
+    /// Skip This Backup was chosen (or `tmutil stopbackup` ran); Time Machine is wrapping up.
+    Stopping,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize)]
@@ -100,7 +102,14 @@ pub fn parse_status(xml: &[u8]) -> Status {
     if !running {
         return (false, None);
     }
+    let stopping = match d.get("Stopping") {
+        Some(Value::Boolean(b)) => *b,
+        Some(Value::Integer(i)) => i.as_signed() == Some(1),
+        _ => false,
+    };
     let phase = match d.get("BackupPhase").and_then(Value::as_string) {
+        _ if stopping => Phase::Stopping,
+        Some("Stopping") => Phase::Stopping,
         Some("Copying") => Phase::Copying,
         Some("ThinningPostBackup" | "Finishing" | "DeletingOldBackups") => Phase::Finishing,
         _ => Phase::Preparing,
@@ -262,6 +271,7 @@ pub fn status_text(info: &TmInfo) -> String {
         return match p.phase {
             Phase::Preparing => "Preparing backup…".into(),
             Phase::Finishing => "Finishing backup…".into(),
+            Phase::Stopping => "Stopping backup…".into(),
             Phase::Copying => match (p.bytes, p.total_bytes) {
                 (Some(b), Some(t)) if t > 0 => {
                     format!("Backing up: {} of {}", format_bytes(b), format_bytes(t))
@@ -407,6 +417,19 @@ mod tests {
             info.remaining_text.as_deref(),
             Some("About 3 minutes remaining")
         );
+    }
+
+    #[test]
+    fn stopping_status() {
+        let xml = COPYING.replace(
+            "<key>Running</key>",
+            "<key>Stopping</key><integer>1</integer>\n<key>Running</key>",
+        );
+        let (running, progress) = parse_status(xml.as_bytes());
+        assert!(running);
+        let info = build_info(&Prefs::default(), (running, progress));
+        assert_eq!(info.status_text, "Stopping backup…");
+        assert_eq!(info.remaining_text, None);
     }
 
     #[test]

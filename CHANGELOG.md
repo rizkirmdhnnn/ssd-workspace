@@ -10,6 +10,9 @@ All notable changes to this project are documented here. The format follows
 
 - Backup progress in the menu, like the built-in Time Machine menu: status, a progress bar
   and the time remaining, updated live while the menu is open.
+- The menu header shows the backup percentage ("Backing up 42% · 770 GB free").
+- After Skip This Backup, the menu and the Detail window say "Stopping backup…" until Time
+  Machine has stopped, and Skip is disabled meanwhile.
 
 ### Fixed
 

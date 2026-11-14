@@ -17,6 +17,7 @@
 //! runs in the background when the menu opens (at most every few seconds); the header
 //! shows the latest result and is updated in place if the menu is still open.
 
+use crate::timemachine::{Phase, Progress};
 use crate::{Snapshot, system};
 use block2::RcBlock;
 use objc2::rc::Retained;
@@ -98,13 +99,19 @@ pub fn set_status(s: &Snapshot) {
     let backing_up = s.tm.running;
     *cur = Some(s.clone());
     drop(cur);
+    // Progress and the header's percentage change while the menu may be open.
     if backing_up && let Some(app) = APP.get() {
         let _ = app.run_on_main_thread(|| {
             PROGRESS.with(|p| {
                 if let Some(view) = p.borrow().as_ref() {
                     view.update();
                 }
-            })
+            });
+            HEADER.with(|h| {
+                if let Some(item) = h.borrow().as_ref() {
+                    apply_header(item);
+                }
+            });
         });
     }
 }
@@ -134,9 +141,19 @@ fn header_content() -> (String, Tone) {
     let count = BUSY.lock().unwrap().count;
     // A backup to the SSD is not finished yet: never "Ready to eject" while it runs.
     let (parts, tone) = if snap.backing_up_to_ssd() {
+        let progress = snap.tm.progress.as_ref();
+        let state = match progress {
+            Some(p) if p.phase == Phase::Stopping => "Stopping backup…".to_string(),
+            Some(Progress {
+                phase: Phase::Copying,
+                fraction: Some(f),
+                ..
+            }) => format!("Backing up {:.0}%", f * 100.0),
+            _ => "Backing up".to_string(),
+        };
         match count {
-            Some(n) if n > 0 => (vec![Some("Backing up".into()), Some(apps(n))], Tone::Warn),
-            _ => (vec![Some("Backing up".into()), free], Tone::Warn),
+            Some(n) if n > 0 => (vec![Some(state), Some(apps(n))], Tone::Warn),
+            _ => (vec![Some(state), free], Tone::Warn),
         }
     } else {
         match count {
@@ -230,7 +247,7 @@ impl ProgressView {
         let fraction = tm
             .progress
             .as_ref()
-            .filter(|p| p.phase == crate::timemachine::Phase::Copying)
+            .filter(|p| p.phase == Phase::Copying)
             .and_then(|p| p.fraction);
         match fraction {
             Some(f) => {

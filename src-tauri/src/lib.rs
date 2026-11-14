@@ -100,6 +100,12 @@ impl Snapshot {
     }
 }
 
+/// How long a skipped backup is shown as stopping at most (Time Machine usually needs a
+/// few seconds).
+const SKIP_STOPPING_MAX: Duration = Duration::from_secs(60);
+/// How long the simulated backup takes to stop after Skip.
+const SIM_STOP_TIME: Duration = Duration::from_secs(5);
+
 /// Why the monitor woke up, ordered by how much has to be re-read.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 enum Wake {
@@ -117,6 +123,9 @@ pub struct AppState {
     dry_run: AtomicBool,
     simulate: Simulate,
     wake: Sender<Wake>,
+    /// When Skip This Backup was last chosen. Time Machine can take a while to stop and
+    /// does not always say so; until it does, the backup is shown as stopping.
+    skip_at: Mutex<Option<Instant>>,
 }
 
 impl AppState {
@@ -130,6 +139,7 @@ impl AppState {
             dry_run: AtomicBool::new(dry_run),
             simulate: Simulate::from_env(),
             wake,
+            skip_at: Mutex::new(None),
         }
     }
     pub fn dry_run(&self) -> bool {
@@ -145,6 +155,12 @@ impl AppState {
     /// Apply the `tm` simulation: a 90-second backup that repeats (preparing, copying with
     /// progress and an estimate, finishing).
     fn simulate_tm(&self, mut info: TmInfo) -> TmInfo {
+        // A skipped simulated backup takes a few seconds to stop, then stays off until
+        // Back Up Now.
+        let skip = *self.skip_at.lock().unwrap();
+        if skip.is_some_and(|t| t.elapsed() >= SIM_STOP_TIME) {
+            return info;
+        }
         if self.sim().tm && !info.running {
             static START: OnceLock<Instant> = OnceLock::new();
             let t = START.get_or_init(Instant::now).elapsed().as_secs() % 90;
@@ -177,6 +193,21 @@ impl AppState {
     fn tm_info(&self) -> TmInfo {
         let cached = self.snapshot.lock().unwrap().as_ref().map(|s| s.tm.clone());
         cached.unwrap_or_else(|| self.simulate_tm(timemachine::info()))
+    }
+    /// Show a backup that was just skipped as stopping, until Time Machine reports it ended.
+    fn show_skip(&self, mut info: TmInfo) -> TmInfo {
+        let skipped = self
+            .skip_at
+            .lock()
+            .unwrap()
+            .is_some_and(|t| t.elapsed() < SKIP_STOPPING_MAX);
+        if info.running && skipped {
+            let p = info.progress.get_or_insert_with(Default::default);
+            p.phase = timemachine::Phase::Stopping;
+            info.status_text = timemachine::status_text(&info);
+            info.remaining_text = None;
+        }
+        info
     }
     fn herd_running(&self) -> bool {
         self.sim().herd || system::herd_services_running()
@@ -266,7 +297,9 @@ impl Monitor {
             workspace_space: workspace_mounted
                 .then(|| system::space_info(system::workspace_path()))
                 .flatten(),
-            tm: st.simulate_tm(timemachine::build_info(&self.prefs, self.status.clone())),
+            tm: st.show_skip(
+                st.simulate_tm(timemachine::build_info(&self.prefs, self.status.clone())),
+            ),
             busy: st.busy.load(Ordering::SeqCst),
             autostart: app.autolaunch().is_enabled().unwrap_or(false),
             dry_run: st.dry_run(),
@@ -497,6 +530,7 @@ fn warn(app: &AppHandle, title: &str, text: String) {
 
 /// "Back Up Now". Only when no backup is running.
 pub fn tm_start_backup(app: &AppHandle) {
+    *state(app).skip_at.lock().unwrap() = None;
     let app = app.clone();
     thread::spawn(move || {
         if !system::time_machine_running() {
@@ -520,6 +554,8 @@ pub fn tm_start_backup(app: &AppHandle) {
 
 /// "Skip This Backup". Only while a backup is running.
 pub fn tm_skip_backup(app: &AppHandle) {
+    *state(app).skip_at.lock().unwrap() = Some(Instant::now());
+    request_refresh(app);
     let app = app.clone();
     thread::spawn(move || {
         if system::time_machine_running() {

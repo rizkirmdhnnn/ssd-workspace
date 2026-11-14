@@ -3,6 +3,7 @@
 
 use crate::menu_icons::{self, Icon};
 use crate::menu_style::{self, Role};
+use crate::timemachine::{Phase, Progress};
 use crate::{Snapshot, system};
 use std::sync::Mutex;
 use tauri::image::Image;
@@ -53,7 +54,14 @@ static BUILT: Mutex<Option<Built>> = Mutex::new(None);
 fn skeleton(s: &Snapshot) -> Snapshot {
     let mut k = s.clone();
     if k.tm.running {
-        k.tm.progress = None;
+        // Only "stopping" changes the menu (Skip This Backup is disabled then).
+        k.tm.progress =
+            k.tm.progress
+                .filter(|p| p.phase == Phase::Stopping)
+                .map(|_| Progress {
+                    phase: Phase::Stopping,
+                    ..Default::default()
+                });
         k.tm.status_text.clear();
         k.tm.remaining_text = None;
     }
@@ -178,7 +186,9 @@ fn build_menu(app: &AppHandle, s: &Snapshot) -> tauri::Result<BuiltMenu> {
             id::TM_SKIP,
             Icon::Skip,
             "Skip This Backup",
-            true,
+            tm.progress
+                .as_ref()
+                .is_none_or(|p| p.phase != Phase::Stopping),
             None,
         )?));
     } else {

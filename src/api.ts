@@ -18,7 +18,7 @@ export interface Volume {
   space: Space | null;
 }
 
-export type TmPhase = "preparing" | "copying" | "finishing";
+export type TmPhase = "preparing" | "copying" | "finishing" | "stopping";
 
 export interface TmProgress {
   phase: TmPhase;

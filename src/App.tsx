@@ -61,6 +61,12 @@ function verdict(
       title: `Close ${plural(holders.length, "app", "apps")} first`,
       sub: "They still have files open on the SSD.",
     };
+  if (backingUpToSsd(s) && s.tm.progress?.phase === "stopping")
+    return {
+      tone: "warn",
+      title: "Stopping backup",
+      sub: "You can eject as soon as Time Machine has stopped.",
+    };
   if (backingUpToSsd(s))
     return {
       tone: "warn",
@@ -149,21 +155,25 @@ function TimeMachineItem({ s }: { s: DetailStatus }) {
     return <Item lead={<Glyph kind="off" />} title="Time Machine not set up" />;
   if (tm.running) {
     const p = tm.progress;
-    const pct = p?.fraction != null ? Math.round(p.fraction * 100) : null;
+    const stopping = p?.phase === "stopping";
+    const pct =
+      p?.phase === "copying" && p.fraction != null ? Math.round(p.fraction * 100) : null;
     return (
       <Item
         lead={<Glyph kind="auto" />}
-        title="Time Machine is backing up"
+        title={stopping ? "Time Machine is stopping" : "Time Machine is backing up"}
         sub={
           <span aria-live="polite">
             {tm.status_text}
-            {pct !== null && p?.phase === "copying" ? ` · ${pct}%` : ""}
+            {pct !== null ? ` · ${pct}%` : ""}
           </span>
         }
         trail={
-          <button className="capsule small" onClick={() => timeMachine("skip")}>
-            Skip
-          </button>
+          !stopping && (
+            <button className="capsule small" onClick={() => timeMachine("skip")}>
+              Skip
+            </button>
+          )
         }
       >
         <div
