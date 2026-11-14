@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-14
+
 ### Added
 
 - Backup progress in the menu, like the built-in Time Machine menu: status, a progress bar
@@ -41,5 +43,6 @@ First public release.
 - `config.json` to choose the workspace and backup volume names.
 - Open at Login, dry-run mode and state simulation for development, `SSD_WORKSPACE_TRACE`.
 
-[Unreleased]: https://github.com/rizkirmdhnnn/ssd-workspace/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/rizkirmdhnnn/ssd-workspace/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/rizkirmdhnnn/ssd-workspace/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/rizkirmdhnnn/ssd-workspace/releases/tag/v0.1.0
