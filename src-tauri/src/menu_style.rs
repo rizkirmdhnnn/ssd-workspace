@@ -9,6 +9,9 @@
 //!   drive badge with a status dot. Clicking it opens the Detail window.
 //! - **Section**: replaced by a real `sectionHeader` item (macOS 14+).
 //! - **Indent**: extra header lines, indented to line up with the item titles.
+//! - **Progress**: the Time Machine status line, replaced by a view with the status, a
+//!   progress bar and the time remaining (like the built-in Time Machine menu). It is
+//!   updated in place on every status refresh, also while the menu is open.
 //!
 //! Eject readiness needs `lsof`, which is too costly for the regular status refresh. It
 //! runs in the background when the menu opens (at most every few seconds); the header
@@ -20,8 +23,9 @@ use objc2::rc::Retained;
 use objc2::runtime::{AnyClass, AnyObject, Bool, Imp, Sel};
 use objc2::{MainThreadMarker, sel};
 use objc2_app_kit::{
-    NSBezierPath, NSColor, NSFont, NSFontAttributeName, NSImage, NSImageSymbolConfiguration,
-    NSMenu, NSMenuItem,
+    NSAutoresizingMaskOptions, NSBezierPath, NSColor, NSControlSize, NSFont, NSFontAttributeName,
+    NSImage, NSImageSymbolConfiguration, NSLineBreakMode, NSMenu, NSMenuItem, NSProgressIndicator,
+    NSProgressIndicatorStyle, NSTextField, NSView,
 };
 use objc2_foundation::{NSAttributedString, NSDictionary, NSPoint, NSRect, NSSize, NSString};
 use std::cell::RefCell;
@@ -34,6 +38,7 @@ pub enum Role {
     Header,
     Section,
     Indent,
+    Progress,
 }
 
 /// Roles of the installed menu's top-level items, by index.
@@ -62,6 +67,8 @@ static BUSY: Mutex<Busy> = Mutex::new(Busy {
 thread_local! {
     /// The header item of the menu that is (or was last) open; main thread only.
     static HEADER: RefCell<Option<Retained<NSMenuItem>>> = const { RefCell::new(None) };
+    /// The backup progress view of the installed menu; main thread only.
+    static PROGRESS: RefCell<Option<ProgressView>> = const { RefCell::new(None) };
 }
 
 /// Install the hook. Call once on the main thread before the tray is created.
@@ -88,7 +95,18 @@ pub fn set_status(s: &Snapshot) {
         b.finished = None;
         crate::holders::invalidate();
     }
+    let backing_up = s.tm.running;
     *cur = Some(s.clone());
+    drop(cur);
+    if backing_up && let Some(app) = APP.get() {
+        let _ = app.run_on_main_thread(|| {
+            PROGRESS.with(|p| {
+                if let Some(view) = p.borrow().as_ref() {
+                    view.update();
+                }
+            })
+        });
+    }
 }
 
 // ---------------------------------------------------------------------------------------
@@ -109,17 +127,127 @@ fn header_content() -> (String, Tone) {
     if snap.busy {
         return ("Ejecting…".into(), Tone::Warn);
     }
-    let (state, tone) = match BUSY.lock().unwrap().count {
-        None => ("Checking…".to_string(), Tone::None),
-        Some(0) => ("Ready to eject".to_string(), Tone::Ok),
-        Some(1) => ("1 app using the SSD".to_string(), Tone::Warn),
-        Some(n) => (format!("{n} apps using the SSD"), Tone::Warn),
+    let apps = |n: usize| format!("{n} app{} using the SSD", if n == 1 { "" } else { "s" });
+    let free = snap
+        .workspace_space
+        .map(|sp| format!("{} free", system::gb(sp.free)));
+    let count = BUSY.lock().unwrap().count;
+    // A backup to the SSD is not finished yet: never "Ready to eject" while it runs.
+    let (parts, tone) = if snap.backing_up_to_ssd() {
+        match count {
+            Some(n) if n > 0 => (vec![Some("Backing up".into()), Some(apps(n))], Tone::Warn),
+            _ => (vec![Some("Backing up".into()), free], Tone::Warn),
+        }
+    } else {
+        match count {
+            None => (vec![Some("Checking…".into()), free], Tone::None),
+            Some(0) => (vec![Some("Ready to eject".into()), free], Tone::Ok),
+            Some(n) => (vec![Some(apps(n)), free], Tone::Warn),
+        }
     };
-    let text = match snap.workspace_space {
-        Some(sp) => format!("{state} · {} free", system::gb(sp.free)),
-        None => state,
-    };
-    (text, tone)
+    (
+        parts.into_iter().flatten().collect::<Vec<_>>().join(" · "),
+        tone,
+    )
+}
+
+// ---------------------------------------------------------------------------------------
+// Backup progress
+
+/// "Backing up: 1.2 GB of 4.2 GB", a progress bar, and "About 3 minutes remaining".
+struct ProgressView {
+    status: Retained<NSTextField>,
+    bar: Retained<NSProgressIndicator>,
+    remaining: Retained<NSTextField>,
+}
+
+/// Leading inset that lines the text up with the titles of items without an icon.
+const PROGRESS_INSET: f64 = 14.5;
+const PROGRESS_WIDTH: f64 = 250.0;
+const PROGRESS_HEIGHT: f64 = 54.0;
+
+impl ProgressView {
+    fn new(mtm: MainThreadMarker) -> (Retained<NSView>, Self) {
+        let frame =
+            |x: f64, y: f64, w: f64, h: f64| NSRect::new(NSPoint::new(x, y), NSSize::new(w, h));
+        let inner = PROGRESS_WIDTH - 2.0 * PROGRESS_INSET;
+        let view = NSView::initWithFrame(
+            mtm.alloc(),
+            frame(0.0, 0.0, PROGRESS_WIDTH, PROGRESS_HEIGHT),
+        );
+        // NSMenu stretches a view to the menu's width only when it is width-sizable.
+        view.setAutoresizingMask(NSAutoresizingMaskOptions::ViewWidthSizable);
+        let label = |size: f64, color: &NSColor, y: f64, h: f64| {
+            let field = NSTextField::labelWithString(&NSString::new(), mtm);
+            field.setFont(Some(&NSFont::menuFontOfSize(size)));
+            field.setTextColor(Some(color));
+            field.setLineBreakMode(NSLineBreakMode::ByTruncatingTail);
+            field.setFrame(frame(PROGRESS_INSET, y, inner, h));
+            field.setAutoresizingMask(NSAutoresizingMaskOptions::ViewWidthSizable);
+            view.addSubview(&field);
+            field
+        };
+        // Bottom to top (the view is not flipped).
+        let remaining = label(11.0, &NSColor::tertiaryLabelColor(), 5.0, 14.0);
+        let bar = NSProgressIndicator::initWithFrame(
+            mtm.alloc(),
+            // A label draws its text 2 pt in from its frame; the bar has no such padding.
+            frame(PROGRESS_INSET + 2.0, 20.0, inner - 4.0, 12.0),
+        );
+        bar.setStyle(NSProgressIndicatorStyle::Bar);
+        bar.setControlSize(NSControlSize::Small);
+        bar.setMinValue(0.0);
+        bar.setMaxValue(1.0);
+        bar.setAutoresizingMask(NSAutoresizingMaskOptions::ViewWidthSizable);
+        view.addSubview(&bar);
+        let status = label(13.0, &NSColor::secondaryLabelColor(), 33.0, 17.0);
+        let this = ProgressView {
+            status,
+            bar,
+            remaining,
+        };
+        this.update();
+        (view, this)
+    }
+
+    /// Show the latest status. Before copying starts and while finishing, Time Machine has
+    /// no fraction: the bar is indeterminate then.
+    fn update(&self) {
+        let snap = SNAPSHOT.lock().unwrap().clone().unwrap_or_default();
+        let tm = &snap.tm;
+        self.status
+            .setStringValue(&NSString::from_str(&tm.status_text));
+        let remaining = tm
+            .remaining_text
+            .as_deref()
+            .unwrap_or(if snap.backing_up_to_ssd() {
+                "Ejecting the SSD stops the backup"
+            } else {
+                ""
+            });
+        self.remaining
+            .setStringValue(&NSString::from_str(remaining));
+        let fraction = tm
+            .progress
+            .as_ref()
+            .filter(|p| p.phase == crate::timemachine::Phase::Copying)
+            .and_then(|p| p.fraction);
+        match fraction {
+            Some(f) => {
+                if self.bar.isIndeterminate() {
+                    // SAFETY: plain AppKit calls on the main thread.
+                    unsafe { self.bar.stopAnimation(None) };
+                    self.bar.setIndeterminate(false);
+                }
+                self.bar.setDoubleValue(f);
+            }
+            None => {
+                self.bar.setIndeterminate(true);
+                // SAFETY: plain AppKit call on the main thread.
+                unsafe { self.bar.startAnimation(None) };
+            }
+        }
+    }
 }
 
 /// 26×26 badge: a filled circle with the drive symbol, plus a status dot. Drawn on demand,
@@ -218,6 +346,15 @@ fn style(menu: &NSMenu) {
             }
             // 12 pt per level: 2 lines the text up with the titles of items with an icon.
             Role::Indent => item.setIndentationLevel(2),
+            Role::Progress => {
+                if item.view().is_none() {
+                    let (view, progress) = ProgressView::new(mtm);
+                    item.setView(Some(&view));
+                    PROGRESS.with(|p| *p.borrow_mut() = Some(progress));
+                } else {
+                    PROGRESS.with(|p| p.borrow().as_ref().map(ProgressView::update));
+                }
+            }
         }
     }
     check_busy();

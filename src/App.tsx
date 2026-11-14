@@ -37,6 +37,14 @@ const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one :
 
 type Tone = "ok" | "warn" | "idle";
 
+/** Time Machine is writing to the backup volume on this SSD (mirrors `backing_up_to_ssd`). */
+function backingUpToSsd(s: DetailStatus): boolean {
+  const b = s.backup;
+  return (
+    s.tm.running && !!b?.mounted && (s.tm.destination === null || s.tm.destination === b.name)
+  );
+}
+
 /** The one question this window answers: can the SSD be ejected right now? */
 function verdict(
   s: DetailStatus,
@@ -52,6 +60,12 @@ function verdict(
       tone: "warn",
       title: `Close ${plural(holders.length, "app", "apps")} first`,
       sub: "They still have files open on the SSD.",
+    };
+  if (backingUpToSsd(s))
+    return {
+      tone: "warn",
+      title: "Backing up",
+      sub: "Wait for Time Machine to finish. Ejecting now stops the backup.",
     };
   const stopped = [s.tm.running && "Time Machine", s.herd_running && "Herd"].filter(Boolean);
   return {
@@ -143,7 +157,7 @@ function TimeMachineItem({ s }: { s: DetailStatus }) {
         sub={
           <span aria-live="polite">
             {tm.status_text}
-            {pct !== null && p?.phase === "copying" ? ` · ${pct}%` : ""} · will be stopped
+            {pct !== null && p?.phase === "copying" ? ` · ${pct}%` : ""}
           </span>
         }
         trail={
@@ -162,6 +176,9 @@ function TimeMachineItem({ s }: { s: DetailStatus }) {
         >
           <div style={{ width: pct === null ? undefined : `${pct}%` }} />
         </div>
+        <p className="sub indent caption">
+          {tm.remaining_text ?? "Ejecting the SSD stops the backup"}
+        </p>
       </Item>
     );
   }

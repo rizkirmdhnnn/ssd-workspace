@@ -12,9 +12,9 @@ pub mod timemachine;
 mod tray;
 
 use serde::Serialize;
-use std::sync::Mutex;
 use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::sync::mpsc::{self, Receiver, RecvTimeoutError, Sender};
+use std::sync::{Mutex, OnceLock};
 use std::thread;
 use std::time::{Duration, Instant};
 use tauri::window::{Effect, EffectState, EffectsBuilder};
@@ -87,6 +87,19 @@ pub struct Snapshot {
     pub dry_run: bool,
 }
 
+impl Snapshot {
+    /// Time Machine is writing to the backup volume on the SSD, so ejecting now would cut
+    /// the backup short.
+    pub fn backing_up_to_ssd(&self) -> bool {
+        let Some(backup) = config::get().backup.as_deref() else {
+            return false;
+        };
+        self.tm.running
+            && self.backup_mounted
+            && self.tm.destination.as_deref().is_none_or(|d| d == backup)
+    }
+}
+
 /// Why the monitor woke up, ordered by how much has to be re-read.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 enum Wake {
@@ -129,12 +142,34 @@ impl AppState {
             Simulate::default()
         }
     }
-    /// Apply the `tm` simulation: a backup that is being prepared.
+    /// Apply the `tm` simulation: a 90-second backup that repeats (preparing, copying with
+    /// progress and an estimate, finishing).
     fn simulate_tm(&self, mut info: TmInfo) -> TmInfo {
         if self.sim().tm && !info.running {
+            static START: OnceLock<Instant> = OnceLock::new();
+            let t = START.get_or_init(Instant::now).elapsed().as_secs() % 90;
+            let total: u64 = 4_200_000_000;
+            let progress = match t {
+                0..10 => timemachine::Progress::default(),
+                10..80 => {
+                    let f = (t - 10) as f64 / 70.0;
+                    timemachine::Progress {
+                        phase: timemachine::Phase::Copying,
+                        fraction: Some(f),
+                        bytes: Some((total as f64 * f) as u64),
+                        total_bytes: Some(total),
+                        time_remaining: Some((80 - t) * 6),
+                    }
+                }
+                _ => timemachine::Progress {
+                    phase: timemachine::Phase::Finishing,
+                    ..Default::default()
+                },
+            };
             info.running = true;
-            info.progress = Some(timemachine::Progress::default());
+            info.progress = Some(progress);
             info.status_text = timemachine::status_text(&info);
+            info.remaining_text = timemachine::remaining_text(&info);
         }
         info
     }

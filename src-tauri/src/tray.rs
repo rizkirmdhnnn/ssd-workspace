@@ -55,6 +55,7 @@ fn skeleton(s: &Snapshot) -> Snapshot {
     if k.tm.running {
         k.tm.progress = None;
         k.tm.status_text.clear();
+        k.tm.remaining_text = None;
     }
     k.workspace_space = k.workspace_space.map(|sp| system::Space {
         free: (sp.free as f64 / 1e9).round() as u64,
@@ -168,9 +169,10 @@ fn build_menu(app: &AppHandle, s: &Snapshot) -> tauri::Result<BuiltMenu> {
     if !tm.configured {
         items.push(Box::new(info("Not set up")?));
     } else if tm.running {
+        // Shown as a view with a progress bar (menu_style.rs); the title is the fallback.
         let line = info(&tm.status_text)?;
         tm_line = Some(line.clone());
-        items.push(Box::new(line));
+        styled!(Role::Progress, line);
         items.push(Box::new(action(
             id::TM_SKIP,
             Icon::Skip,

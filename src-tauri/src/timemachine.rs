@@ -35,6 +35,8 @@ pub struct Progress {
     pub fraction: Option<f64>,
     pub bytes: Option<u64>,
     pub total_bytes: Option<u64>,
+    /// Time Machine's own estimate, in seconds (copying only).
+    pub time_remaining: Option<u64>,
 }
 
 /// What `tmutil status` reports: whether a backup is running, and how far along it is.
@@ -65,6 +67,8 @@ pub struct TmInfo {
     pub progress: Option<Progress>,
     /// Ready-to-show status sentence, e.g. "Backing up: 1.2 GB of 3.4 GB".
     pub status_text: String,
+    /// "About 3 minutes remaining", while copying and Time Machine has an estimate.
+    pub remaining_text: Option<String>,
 }
 
 // ---------------------------------------------------------------------------------------
@@ -113,6 +117,9 @@ pub fn parse_status(xml: &[u8]) -> Status {
             fraction,
             bytes: prog.and_then(|p| uint(p, "bytes")),
             total_bytes: prog.and_then(|p| uint(p, "totalBytes")),
+            time_remaining: prog
+                .and_then(|p| uint(p, "TimeRemaining"))
+                .or_else(|| uint(&d, "TimeRemaining")),
         }),
     )
 }
@@ -228,6 +235,28 @@ pub fn format_bytes(b: u64) -> String {
     }
 }
 
+/// Time Machine's wording: "About 3 minutes remaining".
+pub fn format_remaining(secs: u64) -> String {
+    let n = |v: u64, unit: &str| {
+        format!(
+            "About {v} {unit}{} remaining",
+            if v == 1 { "" } else { "s" }
+        )
+    };
+    match secs {
+        0..60 => "Less than a minute remaining".into(),
+        60..3600 => n(secs.div_ceil(60), "minute"),
+        _ => n((secs + 1800) / 3600, "hour"),
+    }
+}
+
+pub fn remaining_text(info: &TmInfo) -> Option<String> {
+    let p = info.progress.as_ref()?;
+    (p.phase == Phase::Copying)
+        .then_some(p.time_remaining?)
+        .map(format_remaining)
+}
+
 pub fn status_text(info: &TmInfo) -> String {
     if let Some(p) = &info.progress {
         return match p.phase {
@@ -289,8 +318,10 @@ pub fn build_info(prefs: &Prefs, (running, progress): Status) -> TmInfo {
         running,
         progress,
         status_text: String::new(),
+        remaining_text: None,
     };
     info.status_text = status_text(&info);
+    info.remaining_text = remaining_text(&info);
     info
 }
 
@@ -339,6 +370,7 @@ mod tests {
   <key>Percent</key><real>0.42</real>
   <key>bytes</key><integer>1234000000</integer>
   <key>totalBytes</key><integer>3400000000</integer>
+  <key>TimeRemaining</key><real>150</real>
 </dict>
 <key>Running</key><true/>
 </dict></plist>"#;
@@ -362,6 +394,20 @@ mod tests {
 </array>
 <key>LastDestinationID</key><string>F6CA</string>
 </dict></plist>"#;
+
+    #[test]
+    fn remaining_wording() {
+        assert_eq!(format_remaining(20), "Less than a minute remaining");
+        assert_eq!(format_remaining(60), "About 1 minute remaining");
+        assert_eq!(format_remaining(150), "About 3 minutes remaining");
+        assert_eq!(format_remaining(5400), "About 2 hours remaining");
+        let (running, progress) = parse_status(COPYING.as_bytes());
+        let info = build_info(&Prefs::default(), (running, progress));
+        assert_eq!(
+            info.remaining_text.as_deref(),
+            Some("About 3 minutes remaining")
+        );
+    }
 
     #[test]
     fn idle_status() {

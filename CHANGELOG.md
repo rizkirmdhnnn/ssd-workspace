@@ -6,6 +6,16 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Backup progress in the menu, like the built-in Time Machine menu: status, a progress bar
+  and the time remaining, updated live while the menu is open.
+
+### Fixed
+
+- The menu and the Detail window no longer say "Ready to eject" while Time Machine is backing
+  up to the SSD; they say "Backing up" instead.
+
 ## [0.1.0] - 2026-11-13
 
 First public release.

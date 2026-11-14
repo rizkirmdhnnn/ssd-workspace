@@ -360,6 +360,12 @@ main.loading {
   margin-left: 32px;
 }
 
+.checklist .caption {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--tertiary);
+}
+
 /* ---------- Meters ---------- */
 
 .meter {

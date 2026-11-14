@@ -26,6 +26,8 @@ export interface TmProgress {
   fraction: number | null;
   bytes: number | null;
   total_bytes: number | null;
+  /** Time Machine's estimate in seconds, while copying. */
+  time_remaining: number | null;
 }
 
 export interface TimeMachine {
@@ -38,6 +40,8 @@ export interface TimeMachine {
   progress: TmProgress | null;
   /** Ready-to-show status sentence, e.g. "Backing up: 1.2 GB of 3.4 GB". */
   status_text: string;
+  /** "About 3 minutes remaining", while copying. */
+  remaining_text: string | null;
 }
 
 export interface DetailStatus {

@@ -37,7 +37,7 @@ for screenshots and UI work:
 
 | Value | Simulates |
 | --- | --- |
-| `tm` | a Time Machine backup in progress |
+| `tm` | a Time Machine backup in progress (a 90-second cycle: preparing, copying with progress, finishing) |
 | `herd` | the Herd services running |
 | `idle` | nothing using the SSD (the app list is empty) |
 
