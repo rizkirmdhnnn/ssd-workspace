@@ -13,7 +13,8 @@
 | `svg/mapdrive-warna.svg` | Tanda utama berwarna (README, web) |
 | `svg/mapdrive-hitam.svg`, `-putih.svg`, `-biru.svg` | Satu warna. Lampu menjadi lubang. |
 | `svg/mapdrive-kecil.svg` | Potongan kecil untuk ukuran ≤ 32 px (lampu lebih besar) |
-| `svg/appicon.svg`, `appicon-gelap.svg` | Ikon app macOS (grid 1024, badan 824) |
+| `svg/appicon.svg`, `appicon-gelap.svg` | Ikon app macOS (grid 1024, badan 824), dengan gradasi halus dan bayangan tipis |
+| `svg/appicon-kecil.svg` | Potongan kecil ikon app untuk 16/32 px di `icon.icns`: tanda lebih besar, lampu lebih besar, tanpa bayangan |
 | `svg/tray-*.svg`, `png/tray-*.png` | Template icon menu bar 23×18 pt (@2x = 46×36 px) |
 | `svg/lockup-*.svg`, `svg/wordmark.svg` | Lockup dan wordmark, teks sudah berupa outline |
 | `tauri-icons/` | Hasil `pnpm tauri icon` untuk `src-tauri/icons` |
