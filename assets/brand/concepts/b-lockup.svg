@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 256" width="900" height="256">
+  <title>Lepas lockup</title>
+  <g transform="translate(6,28) scale(0.78)">
+    <g fill="#000">
+      <path d="M128 26 L208 164.6 A20 20 0 0 1 188 184.6 H68 A20 20 0 0 1 48 164.6 Z"/>
+      <rect x="52" y="195" width="152" height="34" rx="17"/>
+    </g>
+  </g>
+  <text x="206" y="152" font-family="-apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif" font-size="82" font-weight="600" letter-spacing="-2" fill="#000">SSD Workspace</text>
+  <text x="210" y="192" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif" font-size="26" font-weight="500" letter-spacing="4" fill="#7a7a7a">MENU BAR UNTUK SSD EKSTERNAL</text>
+</svg>

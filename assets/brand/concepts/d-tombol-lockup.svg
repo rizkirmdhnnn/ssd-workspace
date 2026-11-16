@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 256" width="900" height="256">
+  <title>lockup</title>
+  <g transform="translate(2,26) scale(0.8)">
+    <path fill-rule="evenodd" fill="#000" d="M64 68 H192 A36 36 0 0 1 228 104 V152 A36 36 0 0 1 192 188 H64 A36 36 0 0 1 28 152 V104 A36 36 0 0 1 64 68 Z
+      M128 84 L168 150 H88 Z
+      M98 160 H158 A9 9 0 0 1 158 178 H98 A9 9 0 0 1 98 160 Z"/>
+  </g>
+  <text x="206" y="152" font-family="-apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif" font-size="82" font-weight="600" letter-spacing="-2" fill="#000">SSD Workspace</text>
+  <text x="210" y="192" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif" font-size="26" font-weight="500" letter-spacing="4" fill="#7a7a7a">MENU BAR UNTUK SSD EKSTERNAL</text>
+</svg>

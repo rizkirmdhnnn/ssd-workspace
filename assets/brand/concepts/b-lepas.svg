@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <title>Lepas</title>
+  <g fill="#000">
+    <path d="M128 26 L208 164.6 A20 20 0 0 1 188 184.6 H68 A20 20 0 0 1 48 164.6 Z"/>
+    <rect x="52" y="195" width="152" height="34" rx="17"/>
+  </g>
+</svg>

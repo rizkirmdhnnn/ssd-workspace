@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <title>Kartu — an external card</title>
+  <path fill="#000" fill-rule="evenodd" d="M62 68 H182 L216 102 V192 A22 22 0 0 1 194 214 H62 A22 22 0 0 1 40 192 V90 A22 22 0 0 1 62 68 Z
+    M100 104 H156 A10 10 0 0 1 156 124 H100 A10 10 0 0 1 100 104 Z"/>
+</svg>
