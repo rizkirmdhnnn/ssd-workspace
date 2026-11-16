@@ -1,7 +1,7 @@
 {
   "name": "ssd-workspace",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A macOS menu bar app to see what holds an external SSD and eject it safely",
   "license": "MIT",
   "repository": "github:rizkirmdhnnn/ssd-workspace",

@@ -1,3 +1,7 @@
+// NOTE: since 0.1.2 the menu bar icons come from the Map Drive logo kit
+// (assets/brand/map-drive/png/tray-*.png). Running this script overwrites them with the old
+// SF Symbols icons; it is kept for reference only.
+//
 // Renders the menu bar icons in src-tauri/icons/tray/ from SF Symbols.
 //
 //   swift scripts/tray-icons.swift [point size]   (default 15, the largest that fits)

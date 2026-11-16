@@ -6,6 +6,16 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-11-16
+
+### Changed
+
+- New logo, "Map Drive": a work folder that is also a drive, with a status lamp. New app icon
+  (with a small-size version that stays legible at 16 and 32 px) and new menu bar icons for
+  all four states (SSD connected, no SSD, backing up, ejecting).
+- The README shows the logo. The full logo kit and usage guide live in
+  `assets/brand/map-drive/`.
+
 ## [0.1.1] - 2026-11-14
 
 ### Added
@@ -43,6 +53,7 @@ First public release.
 - `config.json` to choose the workspace and backup volume names.
 - Open at Login, dry-run mode and state simulation for development, `SSD_WORKSPACE_TRACE`.
 
-[Unreleased]: https://github.com/rizkirmdhnnn/ssd-workspace/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/rizkirmdhnnn/ssd-workspace/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/rizkirmdhnnn/ssd-workspace/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/rizkirmdhnnn/ssd-workspace/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/rizkirmdhnnn/ssd-workspace/releases/tag/v0.1.0
