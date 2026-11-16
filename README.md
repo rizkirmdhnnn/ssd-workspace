@@ -1,5 +1,12 @@
 # SSD Workspace
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/map-drive/svg/lockup-horizontal-putih.svg">
+    <img src="assets/brand/map-drive/svg/lockup-horizontal.svg" width="320" alt="SSD Workspace">
+  </picture>
+</p>
+
 A macOS menu bar app for people who work from an external SSD. It shows whether the SSD is
 safe to unplug, tells you which apps are still using it, and ejects it safely: it stops Time
 Machine and Laravel Herd for you when they are running, and never force-quits anything.
